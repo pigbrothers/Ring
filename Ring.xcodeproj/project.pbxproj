@@ -7,15 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12F50BA70C3E96242D5F7CE7 /* Pods_Ring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */; };
 		D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FD2216A162001978F9 /* AppDelegate.swift */; };
 		D483B8002216A162001978F9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FF2216A162001978F9 /* ViewController.swift */; };
 		D483B8032216A162001978F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D483B8012216A162001978F9 /* Main.storyboard */; };
 		D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D483B8042216A162001978F9 /* Ring.xcdatamodeld */; };
 		D483B8082216A163001978F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D483B8072216A163001978F9 /* Assets.xcassets */; };
 		D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D483B8092216A163001978F9 /* LaunchScreen.storyboard */; };
+		D4F4C44E221BCC260060BD13 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F4C44D221BCC250060BD13 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4DE6E89F291199A029B1423F /* Pods-Ring.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ring.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ring/Pods-Ring.release.xcconfig"; sourceTree = "<group>"; };
+		722E5312AE3C17110EF3250D /* Pods-Ring.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ring.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ring/Pods-Ring.debug.xcconfig"; sourceTree = "<group>"; };
+		91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ring.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D483B7FA2216A162001978F9 /* Ring.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ring.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D483B7FD2216A162001978F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D483B7FF2216A162001978F9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -24,6 +29,7 @@
 		D483B8072216A163001978F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D483B80A2216A163001978F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D483B80C2216A163001978F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4F4C44D221BCC250060BD13 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +37,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12F50BA70C3E96242D5F7CE7 /* Pods_Ring.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A44E5A23F13565A38BC6BDAA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D483B7F12216A162001978F9 = {
 			isa = PBXGroup;
 			children = (
 				D483B7FC2216A162001978F9 /* Ring */,
 				D483B7FB2216A162001978F9 /* Products */,
+				E79950F16F8082E422D378CE /* Pods */,
+				A44E5A23F13565A38BC6BDAA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,8 +80,18 @@
 				D483B8092216A163001978F9 /* LaunchScreen.storyboard */,
 				D483B80C2216A163001978F9 /* Info.plist */,
 				D483B8042216A162001978F9 /* Ring.xcdatamodeld */,
+				D4F4C44D221BCC250060BD13 /* GoogleService-Info.plist */,
 			);
 			path = Ring;
+			sourceTree = "<group>";
+		};
+		E79950F16F8082E422D378CE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				722E5312AE3C17110EF3250D /* Pods-Ring.debug.xcconfig */,
+				4DE6E89F291199A029B1423F /* Pods-Ring.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +101,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D483B80F2216A163001978F9 /* Build configuration list for PBXNativeTarget "Ring" */;
 			buildPhases = (
+				54940633A05CE73DE1415064 /* [CP] Check Pods Manifest.lock */,
 				D483B7F62216A162001978F9 /* Sources */,
 				D483B7F72216A162001978F9 /* Frameworks */,
 				D483B7F82216A162001978F9 /* Resources */,
+				9EDC88CADA3E1B9B59497318 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -126,12 +155,62 @@
 			buildActionMask = 2147483647;
 			files = (
 				D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */,
+				D4F4C44E221BCC260060BD13 /* GoogleService-Info.plist in Resources */,
 				D483B8082216A163001978F9 /* Assets.xcassets in Resources */,
 				D483B8032216A162001978F9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		54940633A05CE73DE1415064 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Ring-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9EDC88CADA3E1B9B59497318 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Ring/Pods-Ring-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Ring/Pods-Ring-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D483B7F62216A162001978F9 /* Sources */ = {
@@ -282,6 +361,7 @@
 		};
 		D483B8102216A163001978F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 722E5312AE3C17110EF3250D /* Pods-Ring.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +380,7 @@
 		};
 		D483B8112216A163001978F9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DE6E89F291199A029B1423F /* Pods-Ring.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
