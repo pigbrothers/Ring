@@ -6,5 +6,5 @@ target 'Ring' do
   use_frameworks!
 
   # Pods for Ring
-
+  pod 'Firebase/Core'
 end
