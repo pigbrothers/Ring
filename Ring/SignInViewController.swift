@@ -7,9 +7,16 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 class SignInViewController: UIViewController {
 
+    @IBOutlet var Email: UITextField!
+    @IBOutlet var PassWord: UITextField!
+    @IBOutlet var RePw: UITextField!
+    @IBOutlet var Name: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +28,42 @@ class SignInViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+   
+    @IBAction func SignIn(_ sender: UIButton) {
+        if PassWord.text! == "" || RePw.text! == "" || Email.text! == "" || Name.text! == "" {
+            let alert = UIAlertController(title: "회원가입 실패", message: "공백이 있습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            if PassWord.text! != RePw.text! { //비밀번호를 확인할때 위와 똑같은 비밀번호를 쓰지 않으면 발생하는 alert
+                let alert = UIAlertController(title: "회원가입 실패", message: "비밀번호가 일치하지 않습니다.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                Auth.auth().createUser(withEmail: Email.text!, password: PassWord.text!) { (authResult, error) in
+                    if authResult != nil {
+                        let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
+                        let Reference = ref.child("users").child((authResult?.user.uid)!)
+                        let values = ["email" : self.Email.text!, "name" : self.Name.text!]
+                        Reference.updateChildValues(values)
+                        let move = self.storyboard?.instantiateViewController(withIdentifier: "ViewController")
+                        move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+                        self.present(move!, animated: true, completion: nil)
+                    }
+                    else {
+                        //회원가입할때 이메일 중복있으면 alert창이 뜬다.
+                        let alert = UIAlertController(title: "회원가입 실패", message: "잘못된 부분을 처리하고 다시 시도하세요", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        print(error)
+                    }
+                }
+            }
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
