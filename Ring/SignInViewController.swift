@@ -52,12 +52,12 @@ class SignInViewController: UIViewController {
                         move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                         self.present(move!, animated: true, completion: nil)
                     }
-                    else {
+                    else if error != nil {
                         //회원가입할때 이메일 중복있으면 alert창이 뜬다.
+                         print(error)
                         let alert = UIAlertController(title: "회원가입 실패", message: "잘못된 부분을 처리하고 다시 시도하세요", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                        print(error)
+                        self.present(alert, animated: true, completion: nil)      
                     }
                 }
             }

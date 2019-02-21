@@ -11,10 +11,10 @@
 		D474A0DF221BD9D000AFD678 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474A0DE221BD9D000AFD678 /* SignInViewController.swift */; };
 		D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FD2216A162001978F9 /* AppDelegate.swift */; };
 		D483B8002216A162001978F9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FF2216A162001978F9 /* ViewController.swift */; };
-		D483B8032216A162001978F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D483B8012216A162001978F9 /* Main.storyboard */; };
 		D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D483B8042216A162001978F9 /* Ring.xcdatamodeld */; };
 		D483B8082216A163001978F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D483B8072216A163001978F9 /* Assets.xcassets */; };
 		D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D483B8092216A163001978F9 /* LaunchScreen.storyboard */; };
+		D4E0F962221E8288002B5E62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4E0F961221E8288002B5E62 /* Main.storyboard */; };
 		D4F4C44E221BCC260060BD13 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F4C44D221BCC250060BD13 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -26,11 +26,11 @@
 		D483B7FA2216A162001978F9 /* Ring.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ring.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D483B7FD2216A162001978F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D483B7FF2216A162001978F9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		D483B8022216A162001978F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D483B8052216A162001978F9 /* Ring.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ring.xcdatamodel; sourceTree = "<group>"; };
 		D483B8072216A163001978F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D483B80A2216A163001978F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D483B80C2216A163001978F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4E0F961221E8288002B5E62 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D4F4C44D221BCC250060BD13 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,13 +77,13 @@
 			children = (
 				D483B7FD2216A162001978F9 /* AppDelegate.swift */,
 				D483B7FF2216A162001978F9 /* ViewController.swift */,
-				D483B8012216A162001978F9 /* Main.storyboard */,
 				D474A0DE221BD9D000AFD678 /* SignInViewController.swift */,
 				D483B8072216A163001978F9 /* Assets.xcassets */,
 				D483B8092216A163001978F9 /* LaunchScreen.storyboard */,
 				D483B80C2216A163001978F9 /* Info.plist */,
 				D483B8042216A162001978F9 /* Ring.xcdatamodeld */,
 				D4F4C44D221BCC250060BD13 /* GoogleService-Info.plist */,
+				D4E0F961221E8288002B5E62 /* Main.storyboard */,
 			);
 			path = Ring;
 			sourceTree = "<group>";
@@ -160,7 +160,7 @@
 				D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */,
 				D4F4C44E221BCC260060BD13 /* GoogleService-Info.plist in Resources */,
 				D483B8082216A163001978F9 /* Assets.xcassets in Resources */,
-				D483B8032216A162001978F9 /* Main.storyboard in Resources */,
+				D4E0F962221E8288002B5E62 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,14 +226,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D483B8012216A162001978F9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D483B8022216A162001978F9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D483B8092216A163001978F9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
