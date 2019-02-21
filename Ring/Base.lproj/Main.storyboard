@@ -76,7 +76,7 @@
         <!--Friend-->
         <scene sceneID="Tjm-3N-ADg">
             <objects>
-                <viewController id="1N3-eC-tn2" sceneMemberID="viewController">
+                <viewController id="1N3-eC-tn2" customClass="FriendsTableViewController" customModule="Ring" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uBx-4H-6S6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
