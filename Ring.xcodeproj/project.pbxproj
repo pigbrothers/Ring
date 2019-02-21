@@ -14,6 +14,7 @@
 		D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D483B8042216A162001978F9 /* Ring.xcdatamodeld */; };
 		D483B8082216A163001978F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D483B8072216A163001978F9 /* Assets.xcassets */; };
 		D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D483B8092216A163001978F9 /* LaunchScreen.storyboard */; };
+		D4DF491F221E64FC005C9155 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4DF491E221E64FC005C9155 /* FriendsTableViewController.swift */; };
 		D4F4C44E221BCC260060BD13 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F4C44D221BCC250060BD13 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		D483B8072216A163001978F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D483B80A2216A163001978F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D483B80C2216A163001978F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D4DF491E221E64FC005C9155 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		D4F4C44D221BCC250060BD13 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +77,7 @@
 			children = (
 				D483B7FD2216A162001978F9 /* AppDelegate.swift */,
 				D483B7FF2216A162001978F9 /* ViewController.swift */,
+				D4DF491E221E64FC005C9155 /* FriendsTableViewController.swift */,
 				D483B8012216A162001978F9 /* Main.storyboard */,
 				D483B8072216A163001978F9 /* Assets.xcassets */,
 				D483B8092216A163001978F9 /* LaunchScreen.storyboard */,
@@ -169,15 +172,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Ring-checkManifestLockResult.txt",
 			);
@@ -191,8 +190,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Ring/Pods-Ring-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -201,8 +198,6 @@
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
@@ -223,6 +218,7 @@
 			files = (
 				D483B8002216A162001978F9 /* ViewController.swift in Sources */,
 				D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */,
+				D4DF491F221E64FC005C9155 /* FriendsTableViewController.swift in Sources */,
 				D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

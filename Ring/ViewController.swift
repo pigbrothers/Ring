@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
 
@@ -20,6 +21,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    @IBAction func loginButton(_ sender: UIButton) {
+        if let tabBar = storyboard?.instantiateViewController(withIdentifier: "tabBar") {
+            self.present(tabBar, animated: true, completion: nil)
+        }
+    }
+    
 }
 
