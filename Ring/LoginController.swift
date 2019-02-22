@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-class LoginController: UIViewController, GIDSignInUIDelegate {
+class LoginController: UIViewController {
 
     @IBOutlet var PwText: UITextField!
     @IBOutlet var EmailText: UITextField!
