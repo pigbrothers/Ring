@@ -10,24 +10,20 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-class LoginController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate {
+class LoginController: UIViewController, GIDSignInUIDelegate {
 
     @IBOutlet var PwText: UITextField!
     @IBOutlet var EmailText: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    
-    
-   
     
     @IBAction func LoginBtn(_ sender: UIButton) {
         Auth.auth().signIn(withEmail: EmailText.text!, password: PwText.text!) { (user, error) in

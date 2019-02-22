@@ -12,6 +12,7 @@ import FirebaseDatabase
 
 class SignInViewController: UIViewController {
 
+    
     @IBOutlet var Email: UITextField!
     @IBOutlet var PassWord: UITextField!
     @IBOutlet var RePw: UITextField!
@@ -29,6 +30,12 @@ class SignInViewController: UIViewController {
     }
     
    
+    @IBAction func backMain(_ sender: UIButton) {
+        let move = self.storyboard?.instantiateViewController(withIdentifier: "ViewController")
+        move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        self.present(move!, animated: true, completion: nil)
+    }
+    
     @IBAction func SignIn(_ sender: UIButton) {
         if PassWord.text! == "" || RePw.text! == "" || Email.text! == "" || Name.text! == "" {
             let alert = UIAlertController(title: "회원가입 실패", message: "공백이 있습니다.", preferredStyle: .alert)
