@@ -26,7 +26,7 @@ class LoginController: UIViewController {
     @IBAction func LoginBtn(_ sender: UIButton) {
         Auth.auth().signIn(withEmail: EmailText.text!, password: PwText.text!) { (user, error) in
             if user != nil {
-                let move = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController")
+                let move = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController")
                 move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                 self.present(move!, animated: true, completion: nil)
             }
