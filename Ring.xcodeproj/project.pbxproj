@@ -10,7 +10,7 @@
 		12F50BA70C3E96242D5F7CE7 /* Pods_Ring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */; };
 		D474A0DF221BD9D000AFD678 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474A0DE221BD9D000AFD678 /* SignInViewController.swift */; };
 		D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FD2216A162001978F9 /* AppDelegate.swift */; };
-		D483B8002216A162001978F9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FF2216A162001978F9 /* ViewController.swift */; };
+		D483B8002216A162001978F9 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FF2216A162001978F9 /* LoginController.swift */; };
 		D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D483B8042216A162001978F9 /* Ring.xcdatamodeld */; };
 		D483B8082216A163001978F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D483B8072216A163001978F9 /* Assets.xcassets */; };
 		D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D483B8092216A163001978F9 /* LaunchScreen.storyboard */; };
@@ -25,7 +25,7 @@
 		D474A0DE221BD9D000AFD678 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		D483B7FA2216A162001978F9 /* Ring.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ring.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D483B7FD2216A162001978F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D483B7FF2216A162001978F9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D483B7FF2216A162001978F9 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		D483B8052216A162001978F9 /* Ring.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ring.xcdatamodel; sourceTree = "<group>"; };
 		D483B8072216A163001978F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D483B80A2216A163001978F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				D483B7FD2216A162001978F9 /* AppDelegate.swift */,
-				D483B7FF2216A162001978F9 /* ViewController.swift */,
+				D483B7FF2216A162001978F9 /* LoginController.swift */,
 				D474A0DE221BD9D000AFD678 /* SignInViewController.swift */,
 				D483B8072216A163001978F9 /* Assets.xcassets */,
 				D483B8092216A163001978F9 /* LaunchScreen.storyboard */,
@@ -193,9 +193,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Ring/Pods-Ring-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
-				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
@@ -204,9 +201,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
@@ -223,16 +217,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Ring/Pods-Ring-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAuthUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseGoogleAuthUI.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAuthUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseGoogleAuthUI.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,7 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D474A0DF221BD9D000AFD678 /* SignInViewController.swift in Sources */,
-				D483B8002216A162001978F9 /* ViewController.swift in Sources */,
+				D483B8002216A162001978F9 /* LoginController.swift in Sources */,
 				D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */,
 				D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */,
 			);
