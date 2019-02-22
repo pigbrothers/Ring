@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		12F50BA70C3E96242D5F7CE7 /* Pods_Ring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */; };
+		BC0ACD1522200FE700BAF6C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4E0F961221E8288002B5E62 /* Main.storyboard */; };
 		D474A0DF221BD9D000AFD678 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474A0DE221BD9D000AFD678 /* SignInViewController.swift */; };
 		D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FD2216A162001978F9 /* AppDelegate.swift */; };
 		D483B8002216A162001978F9 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FF2216A162001978F9 /* LoginController.swift */; };
 		D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D483B8042216A162001978F9 /* Ring.xcdatamodeld */; };
 		D483B8082216A163001978F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D483B8072216A163001978F9 /* Assets.xcassets */; };
 		D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D483B8092216A163001978F9 /* LaunchScreen.storyboard */; };
-		D4E0F962221E8288002B5E62 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4E0F961221E8288002B5E62 /* Main.storyboard */; };
 		D4F4C44E221BCC260060BD13 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D4F4C44D221BCC250060BD13 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -161,7 +161,7 @@
 				D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */,
 				D4F4C44E221BCC260060BD13 /* GoogleService-Info.plist in Resources */,
 				D483B8082216A163001978F9 /* Assets.xcassets in Resources */,
-				D4E0F962221E8288002B5E62 /* Main.storyboard in Resources */,
+				BC0ACD1522200FE700BAF6C3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

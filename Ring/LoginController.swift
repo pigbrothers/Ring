@@ -10,15 +10,29 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-class LoginController: UIViewController {
+class LoginController: UIViewController, GIDSignInUIDelegate{
 
     @IBOutlet var PwText: UITextField!
     @IBOutlet var EmailText: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        GIDSignIn.sharedInstance()?.signOut()
+        
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
    
+   
+    @IBAction func SignIn(_ sender: Any) {
+        GIDSignIn.sharedInstance().signIn()
+
+        if GIDSignIn.sharedInstance()?.currentUser == nil {
+            let move = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController")
+            move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            self.present(move!, animated: true, completion: nil)
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
