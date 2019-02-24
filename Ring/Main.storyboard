@@ -107,14 +107,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="하이 치누드" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L81-VR-PrP">
-                                <rect key="frame" x="16" y="77" width="293" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CVB-3E-255">
-                                <rect key="frame" x="0.0" y="128" width="375" height="490"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MCell" id="QZ7-ZZ-V3T">
@@ -156,12 +150,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="CVB-3E-255" firstAttribute="top" secondItem="L81-VR-PrP" secondAttribute="bottom" constant="21" id="3NS-Zj-NIr"/>
                             <constraint firstItem="CVB-3E-255" firstAttribute="trailing" secondItem="AQb-WG-pdO" secondAttribute="trailing" id="3pV-vA-kfk"/>
-                            <constraint firstItem="L81-VR-PrP" firstAttribute="leading" secondItem="AQb-WG-pdO" secondAttribute="leading" constant="16" id="Gnu-RY-g5V"/>
-                            <constraint firstItem="L81-VR-PrP" firstAttribute="top" secondItem="AQb-WG-pdO" secondAttribute="top" constant="13" id="L9A-M0-1Kt"/>
-                            <constraint firstItem="AQb-WG-pdO" firstAttribute="trailing" secondItem="L81-VR-PrP" secondAttribute="trailing" constant="66" id="Okb-mx-7Vz"/>
-                            <constraint firstItem="CVB-3E-255" firstAttribute="top" secondItem="L81-VR-PrP" secondAttribute="bottom" constant="21" id="TcC-gE-pxo"/>
+                            <constraint firstItem="CVB-3E-255" firstAttribute="top" secondItem="AQb-WG-pdO" secondAttribute="top" id="IyK-AW-QS5"/>
                             <constraint firstItem="CVB-3E-255" firstAttribute="bottom" secondItem="AQb-WG-pdO" secondAttribute="bottom" id="U9A-EL-M2O"/>
                             <constraint firstItem="CVB-3E-255" firstAttribute="leading" secondItem="AQb-WG-pdO" secondAttribute="leading" id="VkZ-fS-4o0"/>
                         </constraints>
