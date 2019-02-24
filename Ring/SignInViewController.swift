@@ -55,7 +55,7 @@ class SignInViewController: UIViewController {
                         let Reference = ref.child("users").child((authResult?.user.uid)!)
                         let values = ["email" : self.Email.text!, "name" : self.Name.text!]
                         Reference.updateChildValues(values)
-                        let move = self.storyboard?.instantiateViewController(withIdentifier: "ViewController")
+                        let move = self.storyboard?.instantiateViewController(withIdentifier: "LoginController")
                         move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                         self.present(move!, animated: true, completion: nil)
                     }

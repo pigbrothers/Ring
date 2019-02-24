@@ -16,7 +16,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, GIDSig
    
     var window: UIWindow?
     
-
+    func storyboardChangeLogin()
+        //storyboard의 rootviewcontroller를 직접 변경해서 로그인할때 찾아갈 화면을 스토리보드 아이디를 설정해서 직접 조정한다(로그인)
+        //rootviewcontroller는 앱의 가장 먼저 나오는 화면을 설정해준다고 한다.
+        // 스토리보드의 is initial view controller가 위와 비슷한 기능을 해주지만 이것을 통해 사용자가 직접 나오는 화면을 변경할수 있다.
+    {
+        let storyboard = UIStoryboard.init(name : "Main", bundle : nil)
+        let nav = storyboard.instantiateViewController(withIdentifier: "TabViewController")
+        self.window?.rootViewController = nav
+        self.window?.makeKeyAndVisible()
+    }
+    
+    func storyboardChangeLogout()
+        //storyboard의 rootviewcontroller를 직접 변경해서 로그인할때 찾아갈 화면을 스토리보드 아이디를 설정해서 직접 조정한다(로그아웃)
+    {
+        let storyboard = UIStoryboard.init(name : "Main", bundle : nil)
+        let nav = storyboard.instantiateViewController(withIdentifier: "LoginController")
+        self.window?.rootViewController = nav
+        self.window?.makeKeyAndVisible()
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -25,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, GIDSig
         
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         GIDSignIn.sharedInstance().delegate = self
+        
+        
         
         return true
     }
@@ -58,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate, GIDSig
                 print(error.localizedDescription)
                 return
             }
-            
+            self.storyboardChangeLogin()
         }
     }
     

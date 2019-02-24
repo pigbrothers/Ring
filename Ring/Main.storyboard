@@ -13,7 +13,7 @@
         <!--연결 고리-->
         <scene sceneID="wmK-Vl-gL3">
             <objects>
-                <viewController storyboardIdentifier="ViewController" id="s6R-8z-MIo" customClass="LoginController" customModule="Ring" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginController" id="s6R-8z-MIo" customClass="LoginController" customModule="Ring" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4MY-J5-hod" customClass="LoginCon">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -99,24 +99,78 @@
             </objects>
             <point key="canvasLocation" x="1076" y="-161.46926536731635"/>
         </scene>
-        <!--타이틀-->
+        <!--친구목록-->
         <scene sceneID="Uo0-fO-GyP">
             <objects>
-                <viewController id="gwC-ta-xTC" sceneMemberID="viewController">
+                <viewController id="gwC-ta-xTC" customClass="FriendViewController" customModule="Ring" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Feh-sL-Fmd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dER-HO-cxJ">
-                                <rect key="frame" x="27" y="184" width="320" height="333"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="하이 치누드" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L81-VR-PrP">
+                                <rect key="frame" x="16" y="77" width="293" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CVB-3E-255">
+                                <rect key="frame" x="0.0" y="128" width="375" height="490"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MCell" id="QZ7-ZZ-V3T">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QZ7-ZZ-V3T" id="ID0-Za-LZo">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="이게 나고" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mof-mc-All">
+                                                    <rect key="frame" x="241" y="6" width="97" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FCell" id="saG-4I-dm2">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="saG-4I-dm2" id="XBN-1e-SYj">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="이게 너희야" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iec-UR-1r3">
+                                                    <rect key="frame" x="219" y="3" width="97" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="CVB-3E-255" firstAttribute="top" secondItem="L81-VR-PrP" secondAttribute="bottom" constant="21" id="3NS-Zj-NIr"/>
+                            <constraint firstItem="CVB-3E-255" firstAttribute="trailing" secondItem="AQb-WG-pdO" secondAttribute="trailing" id="3pV-vA-kfk"/>
+                            <constraint firstItem="L81-VR-PrP" firstAttribute="leading" secondItem="AQb-WG-pdO" secondAttribute="leading" constant="16" id="Gnu-RY-g5V"/>
+                            <constraint firstItem="L81-VR-PrP" firstAttribute="top" secondItem="AQb-WG-pdO" secondAttribute="top" constant="13" id="L9A-M0-1Kt"/>
+                            <constraint firstItem="AQb-WG-pdO" firstAttribute="trailing" secondItem="L81-VR-PrP" secondAttribute="trailing" constant="66" id="Okb-mx-7Vz"/>
+                            <constraint firstItem="CVB-3E-255" firstAttribute="top" secondItem="L81-VR-PrP" secondAttribute="bottom" constant="21" id="TcC-gE-pxo"/>
+                            <constraint firstItem="CVB-3E-255" firstAttribute="bottom" secondItem="AQb-WG-pdO" secondAttribute="bottom" id="U9A-EL-M2O"/>
+                            <constraint firstItem="CVB-3E-255" firstAttribute="leading" secondItem="AQb-WG-pdO" secondAttribute="leading" id="VkZ-fS-4o0"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="AQb-WG-pdO"/>
                     </view>
-                    <navigationItem key="navigationItem" title="타이틀" id="5xc-mP-Lnw"/>
+                    <navigationItem key="navigationItem" title="친구목록" id="5xc-mP-Lnw"/>
+                    <connections>
+                        <outlet property="tableView" destination="CVB-3E-255" id="vsl-Lz-hZd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bcM-rp-dik" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
