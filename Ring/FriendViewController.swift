@@ -21,6 +21,7 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     
+    
     @IBOutlet weak var tableView: UITableView!
     
     let items: [String] = [(Auth.auth().currentUser?.displayName)!, "swift", "ios"]
