@@ -64,6 +64,14 @@
                                     <action selector="SignIn:" destination="s6R-8z-MIo" eventType="valueChanged" id="cKO-gA-fkh"/>
                                 </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Mi-EF-cb0">
+                                <rect key="frame" x="67" y="574" width="246" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="facebookLoginWithSender:" destination="s6R-8z-MIo" eventType="touchUpInside" id="0QS-Fh-KYc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -361,7 +369,6 @@
         <!--Item-->
         <scene sceneID="c1U-Dk-yCJ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DQy-Yo-8oT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="FriendControll" automaticallyAdjustsScrollViewInsets="NO" id="7Eh-1O-QC2" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" image="friends_" id="G7g-XM-5E8"/>
                     <toolbarItems/>
@@ -374,6 +381,7 @@
                         <segue destination="gwC-ta-xTC" kind="relationship" relationship="rootViewController" id="IG8-bu-yfT"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DQy-Yo-8oT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3156" y="330.58470764617692"/>
         </scene>

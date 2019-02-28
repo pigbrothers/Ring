@@ -9,9 +9,12 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class LoginController: UIViewController, GIDSignInUIDelegate{
 
+     var window: UIWindow?
     @IBOutlet var PwText: UITextField!
     @IBOutlet var EmailText: UITextField!
     override func viewDidLoad() {
@@ -20,10 +23,41 @@ class LoginController: UIViewController, GIDSignInUIDelegate{
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
+       
         // Do any additional setup after loading the view, typically from a nib.
     }
    
-   
+    @IBAction func facebookLogin(sender: AnyObject) {
+        let LoginManager = FBSDKLoginManager()
+        
+        LoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
+            
+            if let error = error {
+                print("Failed to login: \(error.localizedDescription)")
+                return
+            }
+            guard let accessToken = FBSDKAccessToken.current() else {
+                print("Failed to get access token")
+                return
+            }
+            let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
+            // Perform login by calling Firebase APIs
+            Auth.auth().signIn(with: credential, completion: { (user, error) in
+                if let error = error {
+                    print("Login error: \(error.localizedDescription)")
+                    let alertController = UIAlertController(title: "Login Error", message: error.localizedDescription, preferredStyle: .alert)
+                    let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alertController.addAction(okayAction)
+                    self.present(alertController, animated: true, completion: nil)
+                    return
+                }
+                let move = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController")
+                move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+                self.present(move!, animated: true, completion: nil)
+            })
+        }
+    }
+    
     @IBAction func SignIn(_ sender: Any) {
         GIDSignIn.sharedInstance().signIn()
 
