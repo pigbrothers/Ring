@@ -15,6 +15,8 @@ class LoginController: UIViewController {
     @IBOutlet var EmailText: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        //var preferredStatusBarStyle : UIStatusBarStyle = StatusBarStyle()
+        view.backgroundColor = UIColor(displayP3Red: 61/255, green: 91/255, blue: 151/255, alpha: 1)
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -38,4 +40,3 @@ class LoginController: UIViewController {
         }
     }
 }
-

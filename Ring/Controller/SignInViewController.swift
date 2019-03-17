@@ -16,17 +16,34 @@ class SignInViewController: UIViewController {
     @IBOutlet var RePw: UITextField!
     @IBOutlet var Name: UITextField!
     
+    let profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "profile_")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        
+        return imageView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.addSubview(profileImageView)
+        view.backgroundColor = UIColor(displayP3Red: 61/255, green: 91/255, blue: 151/255, alpha: 1)
+        setupProfileImageView()
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    func setupProfileImageView() {
+        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileImageView.bottomAnchor.constraint(equalTo: Name.topAnchor, constant: -12).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+    }
    
     @IBAction func SignIn(_ sender: UIButton) {
         if PassWord.text! == "" || RePw.text! == "" || Email.text! == "" || Name.text! == "" {
