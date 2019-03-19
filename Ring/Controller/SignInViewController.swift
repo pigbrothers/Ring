@@ -16,11 +16,13 @@ class SignInViewController: UIViewController {
     @IBOutlet var RePw: UITextField!
     @IBOutlet var Name: UITextField!
     
-    let profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "profile_")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+        imageView.isUserInteractionEnabled = true
         
         return imageView
     }()
@@ -30,6 +32,7 @@ class SignInViewController: UIViewController {
         view.addSubview(profileImageView)
         view.backgroundColor = UIColor(displayP3Red: 61/255, green: 91/255, blue: 151/255, alpha: 1)
         setupProfileImageView()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -60,12 +63,28 @@ class SignInViewController: UIViewController {
             else{
                 Auth.auth().createUser(withEmail: Email.text!, password: PassWord.text!) { (authResult, error) in
                     if authResult != nil {
+                        
+                        //upload profile image
+                        let storageRef = Storage.storage().reference().child("myImage.png")
+                        if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
+                            storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                                if error != nil {
+                                    print(error)
+                                    return
+                                }
+                                print(metadata)
+                            })
+                        }
+                        
+                        //put data on realtime database
                         let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
                         let Reference = ref.child("users").child((authResult?.user.uid)!)
                         let values = ["email" : self.Email.text!, "name" : self.Name.text!]
                         Reference.updateChildValues(values)
+                        
                         let move = self.storyboard?.instantiateViewController(withIdentifier: "ViewController")
                         move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+                        
                         self.present(move!, animated: true, completion: nil)
                     }
                     else if error != nil {
