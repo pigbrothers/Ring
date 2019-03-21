@@ -63,7 +63,6 @@ class SignInViewController: UIViewController {
             else{
                 Auth.auth().createUser(withEmail: Email.text!, password: PassWord.text!) { (authResult, error) in
                     if authResult != nil {
-                        
                         //upload profile image
                         let storageRef = Storage.storage().reference().child("myImage.png")
                         if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
@@ -72,16 +71,24 @@ class SignInViewController: UIViewController {
                                     print(error)
                                     return
                                 }
-                                print(metadata)
+                                print(metadata?.path)
+                                /*
+                                if let profileImage = metadata?.path {
+                                    let values = ["email" : self.Email!, "name" : self.Name, "profileImageUrl" : profileImage]
+                                }
+                                
+                                self.registerUserIntoDatabaseWithUID(uid: (authResult?.user.uid)!, values: values)
+                                */
                             })
                         }
                         
-                        //put data on realtime database
                         let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
                         let Reference = ref.child("users").child((authResult?.user.uid)!)
                         let values = ["email" : self.Email.text!, "name" : self.Name.text!]
+                        
                         Reference.updateChildValues(values)
                         
+                        //Move to Login View
                         let move = self.storyboard?.instantiateViewController(withIdentifier: "ViewController")
                         move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                         
@@ -89,7 +96,7 @@ class SignInViewController: UIViewController {
                     }
                     else if error != nil {
                         //회원가입할때 이메일 중복있으면 alert창이 뜬다.
-                         print(error)
+                        print(error)
                         let alert = UIAlertController(title: "회원가입 실패", message: "잘못된 부분을 처리하고 다시 시도하세요", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)      
@@ -98,6 +105,16 @@ class SignInViewController: UIViewController {
             }
         }
     }
+    
+    /*
+    private func registerUserIntoDatabaseWithUID(uid: String, values: [String : AnyObject]) {
+        //put data on realtime database
+        let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
+        let Reference = ref.child("users").child(uid)
+        Reference.updateChildValues(values)
+        
+    }
+    */
     
     /*
     // MARK: - Navigation
