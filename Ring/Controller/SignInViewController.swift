@@ -64,7 +64,7 @@ class SignInViewController: UIViewController {
                 Auth.auth().createUser(withEmail: Email.text!, password: PassWord.text!) { (authResult, error) in
                     if authResult != nil {
                         //upload profile image
-                        let storageRef = Storage.storage().reference().child("myImage.png")
+                        let storageRef = Storage.storage().reference().child("myImage")
                         if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                             storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                                 if error != nil {
@@ -85,7 +85,6 @@ class SignInViewController: UIViewController {
                         let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
                         let Reference = ref.child("users").child((authResult?.user.uid)!)
                         let values = ["email" : self.Email.text!, "name" : self.Name.text!]
-                        
                         Reference.updateChildValues(values)
                         
                         //Move to Login View
