@@ -64,28 +64,27 @@ class SignInViewController: UIViewController {
                 Auth.auth().createUser(withEmail: Email.text!, password: PassWord.text!) { (authResult, error) in
                     if authResult != nil {
                         //upload profile image
-                        let storageRef = Storage.storage().reference().child("myImage")
+                        let storageRef = Storage.storage().reference().child((authResult?.user.uid)!)
                         if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                             storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                                 if error != nil {
                                     print(error)
+                                    
                                     return
                                 }
-                                print(metadata?.path)
-                                /*
+                                //print(metadata?.path)
                                 if let profileImage = metadata?.path {
-                                    let values = ["email" : self.Email!, "name" : self.Name, "profileImageUrl" : profileImage]
+                                    if let email = self.Email.text {
+                                        if let name = self.Name.text {
+                                            let values = ["email" : email, "name" : name, "profileImageUrl" : profileImage] as [String : AnyObject]
+                                            let ref = Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
+                                            let reference = ref.child("users").child((authResult?.user.uid)!)
+                                            reference.updateChildValues(values)
+                                        }
+                                    }
                                 }
-                                
-                                self.registerUserIntoDatabaseWithUID(uid: (authResult?.user.uid)!, values: values)
-                                */
                             })
                         }
-                        
-                        let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
-                        let Reference = ref.child("users").child((authResult?.user.uid)!)
-                        let values = ["email" : self.Email.text!, "name" : self.Name.text!]
-                        Reference.updateChildValues(values)
                         
                         //Move to Login View
                         let move = self.storyboard?.instantiateViewController(withIdentifier: "ViewController")
@@ -106,6 +105,7 @@ class SignInViewController: UIViewController {
     }
     
     /*
+    //Database에 유저 정보로 사용할 정보들을 저장하는 function
     private func registerUserIntoDatabaseWithUID(uid: String, values: [String : AnyObject]) {
         //put data on realtime database
         let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
@@ -114,7 +114,6 @@ class SignInViewController: UIViewController {
         
     }
     */
-    
     /*
     // MARK: - Navigation
 
