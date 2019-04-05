@@ -64,16 +64,20 @@ class SignInViewController: UIViewController {
                 Auth.auth().createUser(withEmail: Email.text!, password: PassWord.text!) { (authResult, error) in
                     if authResult != nil {
                         //upload profile image
-                        let storageRef = Storage.storage().reference().child((authResult?.user.uid)!)
+                        let imageName = NSUUID().uuidString
+                        let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
                         if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                             storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                                 if error != nil {
-                                    print(error)
+                                    //print(error)
                                     
                                     return
                                 }
-                                //print(metadata?.path)
-                                if let profileImage = metadata?.path {
+                                
+                                let storagePath = storageRef.child("profile_images").child("\(imageName).png")
+                                storagePath.downloadURL(completion: { (url, error) in
+                                    let profileImage = url?.absoluteString
+                                    print(profileImage)
                                     if let email = self.Email.text {
                                         if let name = self.Name.text {
                                             let values = ["email" : email, "name" : name, "profileImageUrl" : profileImage] as [String : AnyObject]
@@ -82,7 +86,7 @@ class SignInViewController: UIViewController {
                                             reference.updateChildValues(values)
                                         }
                                     }
-                                }
+                                })
                             })
                         }
                         
