@@ -20,6 +20,8 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.reloadData()
     }
     
+    @IBAction func PlusFriend(_ sender: Any) {
+    }
     
     
     @IBOutlet weak var tableView: UITableView!

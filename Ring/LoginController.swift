@@ -14,7 +14,12 @@ import FBSDKLoginKit
 
 class LoginController: UIViewController, GIDSignInUIDelegate{
 
-     var window: UIWindow?
+    
+    let buttonText = NSAttributedString(string: "FaceBook Login")
+   
+    @IBOutlet weak var FBbtn: FBSDKButton!
+    
+    var window: UIWindow?
     @IBOutlet var PwText: UITextField!
     @IBOutlet var EmailText: UITextField!
     override func viewDidLoad() {
@@ -23,10 +28,13 @@ class LoginController: UIViewController, GIDSignInUIDelegate{
         
         GIDSignIn.sharedInstance().uiDelegate = self
         
-       
+       FBbtn.setAttributedTitle(buttonText, for: .normal)
         // Do any additional setup after loading the view, typically from a nib.
     }
    
+    
+    
+    
     @IBAction func facebookLogin(sender: AnyObject) {
         let LoginManager = FBSDKLoginManager()
         

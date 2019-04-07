@@ -57,49 +57,55 @@
                                     <constraint firstAttribute="height" constant="240" id="AQY-P2-AIv"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O68-sb-K4m" customClass="GIDSignInButton">
-                                <rect key="frame" x="67" y="518" width="246" height="48"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O68-sb-K4m" customClass="GIDSignInButton">
+                                <rect key="frame" x="65" y="518" width="246" height="48"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="SignIn:" destination="s6R-8z-MIo" eventType="valueChanged" id="cKO-gA-fkh"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Mi-EF-cb0">
-                                <rect key="frame" x="67" y="574" width="246" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Mi-EF-cb0" customClass="FBSDKButton">
+                                <rect key="frame" x="65" y="574" width="246" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="rzq-mA-CmL"/>
+                                </constraints>
+                                <state key="normal" title="Login"/>
                                 <connections>
-                                    <action selector="facebookLoginWithSender:" destination="s6R-8z-MIo" eventType="touchUpInside" id="0QS-Fh-KYc"/>
+                                    <action selector="facebookLoginWithSender:" destination="s6R-8z-MIo" eventType="touchUpInside" id="nWJ-Yz-7Pn"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="PYh-tR-aXb" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="57" id="1Gw-3d-N98"/>
-                            <constraint firstItem="txr-Gu-85c" firstAttribute="top" secondItem="eyG-Bc-Xl5" secondAttribute="bottom" constant="8" id="47g-8e-p5l"/>
-                            <constraint firstItem="w3K-qn-ymb" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="67" id="565-vK-VLe"/>
-                            <constraint firstItem="eyG-Bc-Xl5" firstAttribute="top" secondItem="w3K-qn-ymb" secondAttribute="bottom" constant="26" id="8qe-So-iJu"/>
-                            <constraint firstItem="eyG-Bc-Xl5" firstAttribute="top" secondItem="w3K-qn-ymb" secondAttribute="bottom" constant="26" id="AMT-cP-cNP"/>
-                            <constraint firstItem="O68-sb-K4m" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="72" id="AXX-me-PTO"/>
-                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="n9R-df-42a" secondAttribute="trailing" constant="56" id="Aef-o1-glB"/>
-                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="w3K-qn-ymb" secondAttribute="trailing" constant="68" id="IWe-PI-o0H"/>
-                            <constraint firstItem="O68-sb-K4m" firstAttribute="top" secondItem="PYh-tR-aXb" secondAttribute="bottom" constant="8" id="JMN-cp-vC4"/>
-                            <constraint firstItem="n9R-df-42a" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="58" id="JZ8-9K-9AI"/>
-                            <constraint firstItem="txr-Gu-85c" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="57" id="LJN-Fz-vgD"/>
-                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="PYh-tR-aXb" secondAttribute="trailing" constant="57" id="Q8Z-iV-JyU"/>
-                            <constraint firstItem="PYh-tR-aXb" firstAttribute="top" secondItem="n9R-df-42a" secondAttribute="bottom" constant="8" id="Uf0-wC-eAL"/>
-                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="eyG-Bc-Xl5" secondAttribute="trailing" constant="57" id="VvC-sg-k9O"/>
-                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="txr-Gu-85c" secondAttribute="trailing" constant="57" id="WMD-2d-vPf"/>
-                            <constraint firstItem="eyG-Bc-Xl5" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="57" id="Zvl-Ev-ucY"/>
-                            <constraint firstItem="w3K-qn-ymb" firstAttribute="top" secondItem="t1Y-7x-IQJ" secondAttribute="top" constant="36" id="fA5-Dg-If8"/>
-                            <constraint firstItem="n9R-df-42a" firstAttribute="top" secondItem="txr-Gu-85c" secondAttribute="bottom" constant="8" id="uu7-lt-TS2"/>
-                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="O68-sb-K4m" secondAttribute="trailing" constant="73" id="xLC-mf-BVp"/>
+                            <constraint firstItem="eyG-Bc-Xl5" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="57" id="0ZE-Yp-COo"/>
+                            <constraint firstItem="w3K-qn-ymb" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="67" id="87H-Xe-jB3"/>
+                            <constraint firstItem="n9R-df-42a" firstAttribute="top" secondItem="txr-Gu-85c" secondAttribute="bottom" constant="8" id="8UZ-ND-FZl"/>
+                            <constraint firstItem="n9R-df-42a" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="58" id="8fj-Ro-TUm"/>
+                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="w3K-qn-ymb" secondAttribute="trailing" constant="68" id="AJX-e1-YLc"/>
+                            <constraint firstItem="1Mi-EF-cb0" firstAttribute="top" secondItem="O68-sb-K4m" secondAttribute="bottom" constant="8" id="AR8-ah-bHt"/>
+                            <constraint firstItem="txr-Gu-85c" firstAttribute="top" secondItem="eyG-Bc-Xl5" secondAttribute="bottom" constant="8" id="At9-ni-3RK"/>
+                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="txr-Gu-85c" secondAttribute="trailing" constant="57" id="GiE-Jm-Do0"/>
+                            <constraint firstItem="txr-Gu-85c" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="57" id="LzG-e4-Cap"/>
+                            <constraint firstItem="PYh-tR-aXb" firstAttribute="top" secondItem="n9R-df-42a" secondAttribute="bottom" constant="8" id="OkL-gt-xf4"/>
+                            <constraint firstItem="PYh-tR-aXb" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="57" id="TrD-4E-MRo"/>
+                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="O68-sb-K4m" secondAttribute="trailing" constant="64" id="ZCO-8e-XKO"/>
+                            <constraint firstItem="O68-sb-K4m" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="65" id="cyu-e4-Q62"/>
+                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="1Mi-EF-cb0" secondAttribute="trailing" constant="64" id="hz8-Av-CtV"/>
+                            <constraint firstItem="w3K-qn-ymb" firstAttribute="top" secondItem="t1Y-7x-IQJ" secondAttribute="top" constant="36" id="nVG-yx-PAk"/>
+                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="n9R-df-42a" secondAttribute="trailing" constant="56" id="oJ5-5V-4z3"/>
+                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="eyG-Bc-Xl5" secondAttribute="trailing" constant="57" id="ocK-q0-1Uc"/>
+                            <constraint firstItem="t1Y-7x-IQJ" firstAttribute="trailing" secondItem="PYh-tR-aXb" secondAttribute="trailing" constant="57" id="pjs-0x-omb"/>
+                            <constraint firstItem="eyG-Bc-Xl5" firstAttribute="top" secondItem="w3K-qn-ymb" secondAttribute="bottom" constant="26" id="uiW-3n-NZn"/>
+                            <constraint firstItem="1Mi-EF-cb0" firstAttribute="leading" secondItem="t1Y-7x-IQJ" secondAttribute="leading" constant="65" id="vtP-6I-nJi"/>
+                            <constraint firstItem="1Mi-EF-cb0" firstAttribute="top" secondItem="O68-sb-K4m" secondAttribute="bottom" constant="8" id="vtu-uc-gb0"/>
+                            <constraint firstItem="O68-sb-K4m" firstAttribute="top" secondItem="PYh-tR-aXb" secondAttribute="bottom" constant="8" id="xzY-Eq-glm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="t1Y-7x-IQJ"/>
                     </view>
                     <navigationItem key="navigationItem" title="연결 고리" id="YLt-uL-8A2"/>
                     <connections>
                         <outlet property="EmailText" destination="eyG-Bc-Xl5" id="a97-D2-oY1"/>
+                        <outlet property="FBbtn" destination="1Mi-EF-cb0" id="nHB-7v-1ih"/>
                         <outlet property="PwText" destination="txr-Gu-85c" id="XFs-5R-gE9"/>
                     </connections>
                 </viewController>
@@ -147,7 +153,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AQb-WG-pdO"/>
                     </view>
-                    <navigationItem key="navigationItem" title="친구목록" id="5xc-mP-Lnw"/>
+                    <navigationItem key="navigationItem" title="친구목록" id="5xc-mP-Lnw">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="UhY-07-szD">
+                            <connections>
+                                <action selector="PlusFriend:" destination="gwC-ta-xTC" id="obg-kA-XEz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="CVB-3E-255" id="vsl-Lz-hZd"/>
                     </connections>
@@ -191,7 +203,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BEQ-8z-231"/>
                     </view>
-                    <navigationItem key="navigationItem" title="채팅방" id="xAo-m1-G4f"/>
+                    <navigationItem key="navigationItem" title="채팅방" id="xAo-m1-G4f">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="TlE-Mv-cWE">
+                            <connections>
+                                <action selector="chatPlus:" destination="vL0-TR-MgY" id="1Xy-xQ-A8T"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="JIh-sC-aq2" id="Wp7-EA-NeP"/>
                     </connections>
