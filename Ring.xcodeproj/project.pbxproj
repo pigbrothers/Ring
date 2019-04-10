@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		12F50BA70C3E96242D5F7CE7 /* Pods_Ring.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */; };
 		5A77088D22411EC700F64BB9 /* SignInViewController+handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A77088C22411EC700F64BB9 /* SignInViewController+handler.swift */; };
+		5A7F714F225E409D00535740 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7F714E225E409D00535740 /* Extension.swift */; };
 		D43A3DF9221FCB260042FD1D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DF8221FCB260042FD1D /* LoginController.swift */; };
 		D43A3DFB221FCB4E0042FD1D /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DFA221FCB4E0042FD1D /* FriendsViewController.swift */; };
 		D43A3DFD221FCB730042FD1D /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DFC221FCB730042FD1D /* SignInViewController.swift */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		4DE6E89F291199A029B1423F /* Pods-Ring.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ring.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ring/Pods-Ring.release.xcconfig"; sourceTree = "<group>"; };
 		5A77088C22411EC700F64BB9 /* SignInViewController+handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignInViewController+handler.swift"; sourceTree = "<group>"; };
+		5A7F714E225E409D00535740 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		722E5312AE3C17110EF3250D /* Pods-Ring.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ring.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ring/Pods-Ring.debug.xcconfig"; sourceTree = "<group>"; };
 		91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ring.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43A3DF8221FCB260042FD1D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A7F714D225E408600535740 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				5A7F714E225E409D00535740 /* Extension.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		A44E5A23F13565A38BC6BDAA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +95,7 @@
 		D483B7FC2216A162001978F9 /* Ring */ = {
 			isa = PBXGroup;
 			children = (
+				5A7F714D225E408600535740 /* Helper */,
 				D4E8952B221FE04C00F925CF /* Model */,
 				D4E1F89B221FD53F002E3B86 /* Controller */,
 				D483B7FD2216A162001978F9 /* AppDelegate.swift */,
@@ -252,6 +263,7 @@
 				D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */,
 				5A77088D22411EC700F64BB9 /* SignInViewController+handler.swift in Sources */,
 				D4E1F89A221FD523002E3B86 /* NewChatController.swift in Sources */,
+				5A7F714F225E409D00535740 /* Extension.swift in Sources */,
 				D4E8952D221FE07800F925CF /* User.swift in Sources */,
 				D43A3DFD221FCB730042FD1D /* SignInViewController.swift in Sources */,
 				D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */,

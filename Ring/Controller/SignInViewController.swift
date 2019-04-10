@@ -73,20 +73,20 @@ class SignInViewController: UIViewController {
                                     
                                     return
                                 }
-                                
-                                let storagePath = storageRef.child("profile_images").child("\(imageName).png")
-                                storagePath.downloadURL(completion: { (url, error) in
-                                    let profileImage = url?.absoluteString
-                                    print(profileImage)
-                                    if let email = self.Email.text {
-                                        if let name = self.Name.text {
-                                            let values = ["email" : email, "name" : name, "profileImageUrl" : profileImage] as [String : AnyObject]
-                                            let ref = Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
-                                            let reference = ref.child("users").child((authResult?.user.uid)!)
-                                            reference.updateChildValues(values)
+                                else{
+                                    storageRef.downloadURL(completion: { (url, error) in
+                                        let profileImage = url?.absoluteString
+                                        print(profileImage)
+                                        if let email = self.Email.text {
+                                            if let name = self.Name.text {
+                                                let values = ["email" : email, "name" : name, "profileImageUrl" : profileImage] as [String : AnyObject]
+                                                let ref = Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
+                                                let reference = ref.child("users").child((authResult?.user.uid)!)
+                                                reference.updateChildValues(values)
+                                            }
                                         }
-                                    }
-                                })
+                                    })
+                                }
                             })
                         }
                         
@@ -108,16 +108,6 @@ class SignInViewController: UIViewController {
         }
     }
     
-    /*
-    //Database에 유저 정보로 사용할 정보들을 저장하는 function
-    private func registerUserIntoDatabaseWithUID(uid: String, values: [String : AnyObject]) {
-        //put data on realtime database
-        let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
-        let Reference = ref.child("users").child(uid)
-        Reference.updateChildValues(values)
-        
-    }
-    */
     /*
     // MARK: - Navigation
 
