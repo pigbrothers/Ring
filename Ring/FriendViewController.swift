@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import AuthenticationServices
+import SwiftyJSON
 
 class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating{
     
@@ -22,16 +23,15 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func PlusFriend(_ sender: Any) {
     }
-    
-    
+    var items : [String] = []
+    var dataJson = JSON()
+    let ref = Database.database().reference()
     @IBOutlet weak var tableView: UITableView!
-    
-    let items: [String] = [((Auth.auth().currentUser?.email)!), "swift", "ios"]
     var resultSearchController = UISearchController()
     var filteredTableData = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        let ref = Database.database().reference()
+        
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -51,11 +51,16 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         ref.child("users").observeSingleEvent(of: .value) { snapShot in
             let vin = snapShot.value as?  Dictionary<String, AnyObject>
-            
-            print(vin?.startIndex)
+            self.dataJson = JSON(vin)
+            print(self.dataJson)
+            print(self.dataJson.count)
+            for (key, value) in self.dataJson {
+                print(key)
+                self.items.append(key)
+            }
+            self.tableView.reloadData()
         }
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.resultSearchController.isActive {
@@ -74,7 +79,7 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if self.resultSearchController.isActive {
             cell.textLabel?.text = filteredTableData[indexPath.row]
         } else {
-            cell.textLabel?.text = items[indexPath.row]
+            cell.textLabel?.text = dataJson[items[indexPath.row]]["email"].stringValue
         }
         /*  주석을 풀면 cell두개를 내 상황에 따라 자유롭게 움직일수 있다.
         if(items[indexPath.row] == (Auth.auth().currentUser?.displayName)!)
