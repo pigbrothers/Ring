@@ -26,12 +26,12 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var tableView: UITableView!
     
-    let items: [String] = [(Auth.auth().currentUser?.displayName)!, "swift", "ios"]
+    let items: [String] = [((Auth.auth().currentUser?.email)!), "swift", "ios"]
     var resultSearchController = UISearchController()
     var filteredTableData = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let ref = Database.database().reference()
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -48,6 +48,12 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
         })()
         self.tableView.reloadData()
         // Do any additional setup after loading the view.
+        
+        ref.child("users").observeSingleEvent(of: .value) { snapShot in
+            let vin = snapShot.value as?  Dictionary<String, AnyObject>
+            
+            print(vin?.startIndex)
+        }
     }
     
     
