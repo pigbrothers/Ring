@@ -66,17 +66,18 @@ class SignInViewController: UIViewController {
                         //upload profile image
                         let imageName = NSUUID().uuidString
                         let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
+                        //profile image로 사용할 때 두 가지 크기의 이미지로 저장할 수 있도록 한다.
                         if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                             storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                                 if error != nil {
-                                    //print(error)
+                                    print(error)
                                     
                                     return
                                 }
                                 else{
                                     storageRef.downloadURL(completion: { (url, error) in
                                         let profileImage = url?.absoluteString
-                                        print(profileImage)
+                                        
                                         if let email = self.Email.text {
                                             if let name = self.Name.text {
                                                 let values = ["email" : email, "name" : name, "profileImageUrl" : profileImage] as [String : AnyObject]
