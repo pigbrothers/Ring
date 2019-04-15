@@ -13,16 +13,6 @@ import SwiftyJSON
 
 class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating{
     
-    func updateSearchResults(for searchController: UISearchController) {
-        filteredTableData.removeAll(keepingCapacity: false)
-        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
-        let array = (items as NSArray).filtered(using: searchPredicate)
-        filteredTableData = array as! [String]
-        self.tableView.reloadData()
-    }
-    
-    @IBAction func PlusFriend(_ sender: Any) {
-    }
     var items : [String] = []
     var dataJson = JSON()
     let ref = Database.database().reference()
@@ -62,6 +52,13 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredTableData.removeAll(keepingCapacity: false)
+        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
+        let array = (items as NSArray).filtered(using: searchPredicate)
+        filteredTableData = array as! [String]
+        self.tableView.reloadData()
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.resultSearchController.isActive {
             return self.filteredTableData.count
@@ -79,7 +76,7 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if self.resultSearchController.isActive {
             cell.textLabel?.text = filteredTableData[indexPath.row]
         } else {
-            cell.textLabel?.text = dataJson[items[indexPath.row]]["email"].stringValue
+            cell.textLabel?.text = dataJson[items[indexPath.row]]["name"].stringValue
         }
         /*  주석을 풀면 cell두개를 내 상황에 따라 자유롭게 움직일수 있다.
         if(items[indexPath.row] == (Auth.auth().currentUser?.displayName)!)
@@ -95,3 +92,4 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
 }
+
