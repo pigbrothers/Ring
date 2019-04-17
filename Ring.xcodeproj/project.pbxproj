@@ -11,6 +11,7 @@
 		BC02DC022222C35300B9DDBF /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC02DC012222C35300B9DDBF /* ChatViewController.swift */; };
 		BC0804D122240DFF004CD5BB /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0804D022240DFF004CD5BB /* ChatRoomViewController.swift */; };
 		BC0ACD1522200FE700BAF6C3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D4E0F961221E8288002B5E62 /* Main.storyboard */; };
+		BC39CE2E22673D96004FE4AC /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC39CE2D22673D96004FE4AC /* FriendTableViewCell.swift */; };
 		BC9CA3E322229424009F6547 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9CA3E222229424009F6547 /* FriendViewController.swift */; };
 		D474A0DF221BD9D000AFD678 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474A0DE221BD9D000AFD678 /* SignInViewController.swift */; };
 		D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FD2216A162001978F9 /* AppDelegate.swift */; };
@@ -27,6 +28,7 @@
 		91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ring.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC02DC012222C35300B9DDBF /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		BC0804D022240DFF004CD5BB /* ChatRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
+		BC39CE2D22673D96004FE4AC /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
 		BC9CA3E222229424009F6547 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		D474A0DE221BD9D000AFD678 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		D483B7FA2216A162001978F9 /* Ring.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ring.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,9 +62,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BC39CE2A22673D0B004FE4AC /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				BC39CE2D22673D96004FE4AC /* FriendTableViewCell.swift */,
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		D483B7F12216A162001978F9 = {
 			isa = PBXGroup;
 			children = (
+				BC39CE2A22673D0B004FE4AC /* New Group */,
 				D483B7FC2216A162001978F9 /* Ring */,
 				D483B7FB2216A162001978F9 /* Products */,
 				E79950F16F8082E422D378CE /* Pods */,
@@ -265,6 +276,7 @@
 				D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */,
 				BC02DC022222C35300B9DDBF /* ChatViewController.swift in Sources */,
 				BC9CA3E322229424009F6547 /* FriendViewController.swift in Sources */,
+				BC39CE2E22673D96004FE4AC /* FriendTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

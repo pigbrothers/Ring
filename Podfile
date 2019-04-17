@@ -13,4 +13,5 @@ pod 'GoogleSignIn'
 pod 'FirebaseUI/Google'
 pod 'FBSDKLoginKit'
 pod 'SwiftyJSON'
+pod 'Firebase/Storage'
 end

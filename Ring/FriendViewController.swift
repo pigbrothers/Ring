@@ -11,14 +11,18 @@ import Firebase
 import AuthenticationServices
 import SwiftyJSON
 
-class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating{
+class FriendViewController: UIViewController, UISearchResultsUpdating{
     
+    
+    var pic = UIImage()
     var items : [String] = []
     var dataJson = JSON()
     let ref = Database.database().reference()
+    let str = Storage.storage()
     @IBOutlet weak var tableView: UITableView!
     var resultSearchController = UISearchController()
     var filteredTableData = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,37 +63,37 @@ class FriendViewController: UIViewController, UITableViewDelegate, UITableViewDa
         filteredTableData = array as! [String]
         self.tableView.reloadData()
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.resultSearchController.isActive {
-            return self.filteredTableData.count
-        }else{
-            return self.items.count
-        }
-    }
+}
+extension FriendViewController : UITableViewDataSource{
+  
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MCell")! as UITableViewCell
-       // let cell2 = tableView.dequeueReusableCell(withIdentifier: "FCell")! as UITableViewCell
-        //cell2.textLabel?.text = items[indexPath.row]
-        cell.textLabel?.text = items[indexPath.row]
+    func tableView(_ tableView:UITableView, numberOfRowsInSection section: Int ) -> Int {
+            return self.dataJson.count
+        }
         
-        if self.resultSearchController.isActive {
-            cell.textLabel?.text = filteredTableData[indexPath.row]
-        } else {
-            cell.textLabel?.text = dataJson[items[indexPath.row]]["name"].stringValue
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MCell", for : indexPath as IndexPath) as! FriendTableViewCell
+        
+        let imageUrl = dataJson[items[indexPath.row]]["image"].stringValue
+        cell.friendName.text = dataJson[items[indexPath.row]]["name"].stringValue
+        cell.friendEmail.text = dataJson[items[indexPath.row]]["email"].stringValue
+        let storageRef = str.reference(forURL: imageUrl)
+        storageRef.getData(maxSize: 1*1024*1024){ data, error in
+            if let error = error{
+                print(error.localizedDescription)
+            }else{
+            let poto = UIImage(data: data!)
+            self.pic = poto!
+            }
         }
-        /*  주석을 풀면 cell두개를 내 상황에 따라 자유롭게 움직일수 있다.
-        if(items[indexPath.row] == (Auth.auth().currentUser?.displayName)!)
-        {
-            return cell
-        }
-        else{
-            return cell2
-        }
-         */
+      cell.friendImageView = pic
+        
         return cell
     }
-    
+}
+extension FriendViewController : UITableViewDelegate{
     
 }
+    
+
 
