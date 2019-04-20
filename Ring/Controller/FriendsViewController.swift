@@ -11,13 +11,33 @@ import Firebase
 
 class FriendsViewController: UITableViewController{
 
+    let cellId = "cellId2"
+    var users = [User]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         /*
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         */
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        fetchUser()
         checkIfUserIsLoggedIn()
         // Do any additional setup after loading the view.
+    }
+    
+    func fetchUser() {
+        Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let user = User()
+                
+                user.name = dictionary["name"] as? String
+                user.email = dictionary["email"] as? String
+                user.profileImageUrl = dictionary["profileImageUrl"] as? String
+                self.users.append(user)
+                self.tableView.reloadData()
+            }
+        }, withCancel: nil)
     }
     
     func checkIfUserIsLoggedIn() {
@@ -37,6 +57,28 @@ class FriendsViewController: UITableViewController{
                 }
             }, withCancel: nil)
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return users.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
+        
+        if let profileImageUrl = user.profileImageUrl {
+            cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
     }
     
     func setupNavBarWithUser(user: User) {
