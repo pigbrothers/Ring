@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ChatController: UITableViewController {
+class ChatController: UITableViewController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,6 +82,15 @@ class ChatController: UITableViewController {
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         
         self.navigationItem.titleView = titleView
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showChatController))
+        self.navigationController?.navigationBar.addGestureRecognizer(tapGesture)
+        self.navigationController?.navigationBar.isUserInteractionEnabled = true
+    }
+    
+    @objc func showChatController() {
+        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(chatLogController, animated: true)
     }
     
     @objc func handleLogout() {

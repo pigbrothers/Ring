@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class FriendsViewController: UITableViewController{
+class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
 
     let cellId = "cellId2"
     var users = [User]()
@@ -118,6 +118,12 @@ class FriendsViewController: UITableViewController{
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         
         self.navigationItem.titleView = titleView
+        
+        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+    }
+    
+    @objc func showChatController() {
+        print(123)
     }
     
     @objc func handleLogout() {
