@@ -19,10 +19,22 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
         /*
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         */
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(NewFriends))
+        
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
         fetchUser()
         checkIfUserIsLoggedIn()
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func NewFriends() {
+        let popup: AlertFriendsView = UINib(nibName: AlertFriendsView.identifier, bundle: nil).instantiate(withOwner: self, options: nil)[0] as! AlertFriendsView
+        popup.backgroundColor = UIColor.gray.withAlphaComponent(1)
+        popup.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
+        popup.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
+   
+        self.view.addSubview(popup);
+        
     }
     
     func fetchUser() {
