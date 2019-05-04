@@ -27,7 +27,8 @@ class NewChatController: UITableViewController {
             
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 let user = User()
-
+                user.id = snapshot.key
+                
                 user.name = dictionary["name"] as? String
                 user.email = dictionary["email"] as? String
                 user.profileImageUrl = dictionary["profileImageUrl"] as? String
@@ -66,6 +67,16 @@ class NewChatController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 56
+    }
+    
+    var chatController: ChatController?
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dismiss(animated: true) {
+            print("Dismiss completed")
+            let user = self.users[indexPath.row]
+            self.chatController?.showChatControllerForUser(user)
+        }
     }
 }
 

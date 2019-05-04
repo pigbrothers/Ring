@@ -16,10 +16,52 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: self, action: #selector(handleNewChat))
         checkIfUserIsLoggedIn()
+        
+        observeMessages()
+    }
+    
+    var messages = [Message]()
+    
+    func observeMessages() {
+        let ref = Database.database().reference().child("messages")
+        ref.observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let message = Message()
+                
+                message.fromId = dictionary["fromId"] as? String
+                message.toId = dictionary["toId"] as? String
+                message.text = dictionary["text"] as? String
+                message.timeStamp = dictionary["timeStamp"] as? NSNumber
+                
+                print(message.text)
+                self.messages.append(message)
+                
+                //thread 문제 해결을 위한 코드
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }, withCancel: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+        let message = messages[indexPath.row]
+        
+        cell.textLabel?.text = message.toId
+        cell.detailTextLabel?.text = message.text
+        
+        return cell
     }
     
     @objc func handleNewChat() {
         let newChatController = NewChatController()
+        newChatController.chatController = self
         let navController = UINavigationController(rootViewController: newChatController)
         
         present(navController, animated: true, completion: nil)
@@ -82,14 +124,16 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         
         self.navigationItem.titleView = titleView
-        
+        /*
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showChatController))
         self.navigationController?.navigationBar.addGestureRecognizer(tapGesture)
         self.navigationController?.navigationBar.isUserInteractionEnabled = true
+        */
     }
     
-    @objc func showChatController() {
+    @objc func showChatControllerForUser(_ user: User) {
         let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
     }
     
@@ -109,27 +153,13 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     }
 
     // MARK: - Table view data source
-
+    
+    /*
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
     */
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
