@@ -14,17 +14,83 @@ class AlertFriendsView : UIView, UITableViewDelegate, UITableViewDataSource, UIS
     var resultSearchController = UISearchController()
     var filteredTableData = [String]()
     var users = [User]()
-    var items = ["aa","bb"]
+
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if resultSearchController.isActive {
-            return filteredTableData.count
-        }
-        else {
-            return 1
-        }
+        return 56
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as! UserCell
+        
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
+        
+        if let profileImageUrl = user.profileImageUrl {
+            cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        }
+        return cell
+    }
+    
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            controller.searchBar.barStyle = UIBarStyle.black
+            controller.searchBar.barTintColor = UIColor.white
+            controller.searchBar.backgroundColor = UIColor.clear
+            self.tableView.tableHeaderView = controller.searchBar
+            return controller
+        })()
+        
+        fetchUser()
+        self.tableView.reloadData()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UserCell.self, forCellReuseIdentifier: "SearchCell")
+        setupView()
+        fetchUser()
+    }
+    
+    private func setupView() {
+        backgroundColor = .white
+        addSubview(tableView)
+  
+        setupLayout()
+    }
+    
+    private func setupLayout() {
+        NSLayoutConstraint.activate([
+            //pin headerTitle to headerView
+           
+            //layout contentView
+            tableView.topAnchor.constraint(equalTo: topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            
+            ])
+    }
+    
     func setupNavBarWithUser(user: User) {
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
@@ -61,108 +127,6 @@ class AlertFriendsView : UIView, UITableViewDelegate, UITableViewDataSource, UIS
         containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as! UserCell
-        
-        let user = users[indexPath.row]
-        cell.textLabel?.text = user.name
-        cell.detailTextLabel?.text = user.email
-        
-        if let profileImageUrl = user.profileImageUrl {
-            cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
-        }
-        /*
-        if resultSearchController.isActive {
-            cell.detailTextLabel?.text = filteredTableData[indexPath.row]
-        }
-        */
-        return cell
-    }
-    
-    
-    lazy var addButton: UIButton = {
-        let addButton = UIButton(type: .contactAdd)
-        addButton.translatesAutoresizingMaskIntoConstraints = false
-        return addButton
-    }()
-    
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
-    
-    
-    lazy var headerView: UIView = {
-        let headerView = UIView()
-        headerView.backgroundColor = UIColor(red: 22/255, green: 160/255, blue: 133/255, alpha: 0.5)
-        headerView.layer.shadowColor = UIColor.gray.cgColor
-        headerView.layer.shadowOffset = CGSize(width: 0, height: 10)
-        headerView.layer.shadowOpacity = 1
-        headerView.layer.shadowRadius = 5
-        headerView.addSubview(addButton)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        return headerView
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        fetchUser()
-        setupView()
-        self.tableView.reloadData()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SearchCell")
-        setupView()
-    }
-    
-    private func setupView() {
-        self.resultSearchController = ({
-            let controller = UISearchController(searchResultsController: nil)
-            controller.searchResultsUpdater = self
-            controller.dimsBackgroundDuringPresentation = false
-            controller.searchBar.sizeToFit()
-            controller.searchBar.barStyle = UIBarStyle.black
-            controller.searchBar.barTintColor = UIColor.white
-            controller.searchBar.backgroundColor = UIColor.clear
-            self.tableView.tableHeaderView = controller.searchBar
-            return controller
-        })()
-        
-        backgroundColor = .white
-        addSubview(tableView)
-        addSubview(headerView)
-        setupLayout()
-    }
-    
-    private func setupLayout() {
-        NSLayoutConstraint.activate([
-            //pin headerTitle to headerView
-           
-            //layout addButton in headerView
-            addButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            addButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10),
-            
-            //pin headerView to top
-            headerView.topAnchor.constraint(equalTo: topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 0),
-            
-            //layout contentView
-            tableView.topAnchor.constraint(equalTo: topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
-            
-            ])
     }
     
     //custom views should override this to return true if
