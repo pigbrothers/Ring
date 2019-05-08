@@ -7,8 +7,80 @@
 //
 
 import UIKit
+import Firebase
 
-class AlertFriendsView : UIView {
+class AlertFriendsView : UIView, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating, UIGestureRecognizerDelegate {
+   
+    var resultSearchController = UISearchController()
+    var filteredTableData = [String]()
+    var users = [User]()
+    var items = ["aa","bb"]
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if resultSearchController.isActive {
+            return filteredTableData.count
+        }
+        else {
+            return 1
+        }
+    }
+    func setupNavBarWithUser(user: User) {
+        let titleView = UIView()
+        titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        titleView.addSubview(containerView)
+        
+        let profileImageView = UIImageView()
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        profileImageView.layer.cornerRadius = 20
+        profileImageView.clipsToBounds = true
+        profileImageView.contentMode = .scaleAspectFill
+        if let profileImageUrl = user.profileImageUrl {
+            profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        }
+        containerView.addSubview(profileImageView)
+        
+        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        let nameLabel = UILabel()
+        
+        containerView.addSubview(nameLabel)
+        nameLabel.text = user.name
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor,constant: 8).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+        nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+        
+        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath) as! UserCell
+        
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
+        
+        if let profileImageUrl = user.profileImageUrl {
+            cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        }
+        /*
+        if resultSearchController.isActive {
+            cell.detailTextLabel?.text = filteredTableData[indexPath.row]
+        }
+        */
+        return cell
+    }
+    
     
     lazy var addButton: UIButton = {
         let addButton = UIButton(type: .contactAdd)
@@ -16,21 +88,12 @@ class AlertFriendsView : UIView {
         return addButton
     }()
     
-    lazy var contentView: UIImageView = {
-        let contentView = UIImageView()
-        contentView.image = UIImage(named: "WoodTexture")
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        return contentView
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
     
-    lazy var headerTitle: UILabel = {
-        let headerTitle = UILabel()
-        headerTitle.font = UIFont.systemFont(ofSize: 22, weight: .medium)
-        headerTitle.text = "Custom View"
-        headerTitle.textAlignment = .center
-        headerTitle.translatesAutoresizingMaskIntoConstraints = false
-        return headerTitle
-    }()
     
     lazy var headerView: UIView = {
         let headerView = UIView()
@@ -39,7 +102,6 @@ class AlertFriendsView : UIView {
         headerView.layer.shadowOffset = CGSize(width: 0, height: 10)
         headerView.layer.shadowOpacity = 1
         headerView.layer.shadowRadius = 5
-        headerView.addSubview(headerTitle)
         headerView.addSubview(addButton)
         headerView.translatesAutoresizingMaskIntoConstraints = false
         return headerView
@@ -47,17 +109,35 @@ class AlertFriendsView : UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        fetchUser()
         setupView()
+        self.tableView.reloadData()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SearchCell")
         setupView()
     }
     
     private func setupView() {
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            controller.searchBar.barStyle = UIBarStyle.black
+            controller.searchBar.barTintColor = UIColor.white
+            controller.searchBar.backgroundColor = UIColor.clear
+            self.tableView.tableHeaderView = controller.searchBar
+            return controller
+        })()
+        
         backgroundColor = .white
-        addSubview(contentView)
+        addSubview(tableView)
         addSubview(headerView)
         setupLayout()
     }
@@ -65,11 +145,7 @@ class AlertFriendsView : UIView {
     private func setupLayout() {
         NSLayoutConstraint.activate([
             //pin headerTitle to headerView
-            headerTitle.topAnchor.constraint(equalTo: headerView.topAnchor),
-            headerTitle.bottomAnchor.constraint(equalTo: headerView.bottomAnchor),
-            headerTitle.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            headerTitle.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-            
+           
             //layout addButton in headerView
             addButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             addButton.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -10),
@@ -78,13 +154,14 @@ class AlertFriendsView : UIView {
             headerView.topAnchor.constraint(equalTo: topAnchor),
             headerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            headerView.heightAnchor.constraint(equalToConstant: 40),
+            headerView.heightAnchor.constraint(equalToConstant: 0),
             
             //layout contentView
-            contentView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
-            contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            tableView.topAnchor.constraint(equalTo: topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            
             ])
     }
     
@@ -93,5 +170,41 @@ class AlertFriendsView : UIView {
     //from apple docs https://developer.apple.com/documentation/uikit/uiview/1622549-requiresconstraintbasedlayout
     override class var requiresConstraintBasedLayout: Bool {
         return true
+    }
+    
+    class var identifier: String{
+        let xibName = "AlertFriendsView"
+        return  xibName
+        
+    }
+    
+    class func instanceFromNib() -> UIView{
+        return UINib(nibName: self.identifier, bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! UIView
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredTableData.removeAll(keepingCapacity: false)
+        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
+        let array = (users as NSArray).filtered(using: searchPredicate)
+        filteredTableData = array as! [String]
+        self.tableView.reloadData()
+    }
+    
+    func fetchUser() {
+        Database.database().reference().child("users").observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let user = User()
+                
+                user.name = dictionary["name"] as? String
+                user.email = dictionary["email"] as? String
+                user.profileImageUrl = dictionary["profileImageUrl"] as? String
+                if user.email != Auth.auth().currentUser?.email{
+                    self.users.append(user)
+                }
+                
+                self.tableView.reloadData()
+            }
+        }, withCancel: nil)
     }
 }
