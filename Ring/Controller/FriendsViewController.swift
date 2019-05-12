@@ -28,13 +28,19 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
     }
     
     @objc func NewFriends() {
+        let newChatController = AlertFriendsView()
+        let navController = UINavigationController(rootViewController: newChatController)
+        
+        present(navController, animated: true, completion: nil)
+        /*
         let popup: AlertFriendsView = UINib(nibName: AlertFriendsView.identifier, bundle: nil).instantiate(withOwner: self, options: nil)[0] as! AlertFriendsView
         popup.backgroundColor = UIColor.gray.withAlphaComponent(1)
         popup.center = CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2)
         popup.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height)
        // popup.btn_close.addTarget(self, action: #selector(btnClick_favoriteAddDialog_add), for: .touchUpInside)
         self.view.addSubview(popup);
-        
+ 
+         */
     }
     
     @objc func btnClick_favoriteAddDialog_add () -> Void

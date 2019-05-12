@@ -19,7 +19,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func handleNewChat() {
-        let newChatController = NewChatController()
+        let newChatController = AlertFriendsView()
         let navController = UINavigationController(rootViewController: newChatController)
         
         present(navController, animated: true, completion: nil)

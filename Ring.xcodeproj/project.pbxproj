@@ -11,12 +11,11 @@
 		5A3DDB882279F2220065159A /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3DDB872279F2220065159A /* ChatLogController.swift */; };
 		5A77088D22411EC700F64BB9 /* SignInViewController+handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A77088C22411EC700F64BB9 /* SignInViewController+handler.swift */; };
 		5A7F714F225E409D00535740 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7F714E225E409D00535740 /* Extension.swift */; };
+		BC0702782287C5B100CC23D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FD2216A162001978F9 /* AppDelegate.swift */; };
 		BC0ACBD3227C62E000788231 /* AlertFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */; };
-		BC0ACBD8227C6D3900788231 /* AlertFriendsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC0ACBD7227C6D3900788231 /* AlertFriendsView.xib */; };
 		D43A3DF9221FCB260042FD1D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DF8221FCB260042FD1D /* LoginController.swift */; };
 		D43A3DFB221FCB4E0042FD1D /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DFA221FCB4E0042FD1D /* FriendsViewController.swift */; };
 		D43A3DFD221FCB730042FD1D /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DFC221FCB730042FD1D /* SignInViewController.swift */; };
-		D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FD2216A162001978F9 /* AppDelegate.swift */; };
 		D483B8032216A162001978F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D483B8012216A162001978F9 /* Main.storyboard */; };
 		D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D483B8042216A162001978F9 /* Ring.xcdatamodeld */; };
 		D483B8082216A163001978F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D483B8072216A163001978F9 /* Assets.xcassets */; };
@@ -34,8 +33,7 @@
 		5A7F714E225E409D00535740 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		722E5312AE3C17110EF3250D /* Pods-Ring.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ring.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ring/Pods-Ring.debug.xcconfig"; sourceTree = "<group>"; };
 		91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ring.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFriendsView.swift; sourceTree = "<group>"; };
-		BC0ACBD7227C6D3900788231 /* AlertFriendsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertFriendsView.xib; sourceTree = "<group>"; };
+		BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertFriendsView.swift; sourceTree = "<group>"; };
 		D43A3DF8221FCB260042FD1D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		D43A3DFA221FCB4E0042FD1D /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		D43A3DFC221FCB730042FD1D /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +78,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BC0702772287C34600CC23D3 /* trash */ = {
+			isa = PBXGroup;
+			children = (
+				BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */,
+			);
+			path = trash;
+			sourceTree = "<group>";
+		};
 		D483B7F12216A162001978F9 = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +107,7 @@
 		D483B7FC2216A162001978F9 /* Ring */ = {
 			isa = PBXGroup;
 			children = (
+				BC0702772287C34600CC23D3 /* trash */,
 				5A7F714D225E408600535740 /* Helper */,
 				D4E8952B221FE04C00F925CF /* Model */,
 				D4E1F89B221FD53F002E3B86 /* Controller */,
@@ -122,8 +129,6 @@
 				D43A3DFC221FCB730042FD1D /* SignInViewController.swift */,
 				5A77088C22411EC700F64BB9 /* SignInViewController+handler.swift */,
 				D43A3DFA221FCB4E0042FD1D /* FriendsViewController.swift */,
-				BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */,
-				BC0ACBD7227C6D3900788231 /* AlertFriendsView.xib */,
 				D4E1F897221FD255002E3B86 /* ChatController.swift */,
 				D4E1F899221FD523002E3B86 /* NewChatController.swift */,
 				5A3DDB872279F2220065159A /* ChatLogController.swift */,
@@ -211,7 +216,6 @@
 				D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */,
 				D4F4C44E221BCC260060BD13 /* GoogleService-Info.plist in Resources */,
 				D483B8082216A163001978F9 /* Assets.xcassets in Resources */,
-				BC0ACBD8227C6D3900788231 /* AlertFriendsView.xib in Resources */,
 				D483B8032216A162001978F9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,9 +272,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC0702782287C5B100CC23D3 /* AppDelegate.swift in Sources */,
 				D43A3DFB221FCB4E0042FD1D /* FriendsViewController.swift in Sources */,
 				D43A3DF9221FCB260042FD1D /* LoginController.swift in Sources */,
-				D483B7FE2216A162001978F9 /* AppDelegate.swift in Sources */,
 				5A77088D22411EC700F64BB9 /* SignInViewController+handler.swift in Sources */,
 				D4E1F89A221FD523002E3B86 /* NewChatController.swift in Sources */,
 				5A3DDB882279F2220065159A /* ChatLogController.swift in Sources */,
