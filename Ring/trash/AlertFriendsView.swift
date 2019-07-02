@@ -72,8 +72,13 @@ class AlertFriendsView: UITableViewController {
     }
     @objc func addFriends(_ sender: UIButton) {
 
-        var userAll = users[sender.tag]
-        Database.database().reference().child("users").child((Auth.auth().currentUser?.uid)!).child("friends").setValue(userAll.email)
+        let userAll = users[sender.tag]
+        let values = ["email" : userAll.email, "name" : userAll.name, "profileImageUrl" : userAll.profileImageUrl] as [String : AnyObject]
+        let id:String.Index = (userAll.email?.firstIndex(of: "@"))!
+        let userid:String = String(userAll.email![...id])
+        print(userid)
+        let Db = Database.database().reference()
+        Db.child("users").child((Auth.auth().currentUser?.uid)!).child("friends").child(userid).setValue(values)
     }
 }
 
