@@ -9,19 +9,96 @@
 import UIKit
 import CoreData
 import Firebase
+import GoogleSignIn
+import FBSDKCoreKit
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInUIDelegate, GIDSignInDelegate  {
 
     var window: UIWindow?
+    
+    
+    func storyboardChangeLogin()
+        //storyboard의 rootviewcontroller를 직접 변경해서 로그인할때 찾아갈 화면을 스토리보드 아이디를 설정해서 직접 조정한다(로그인)
+        //rootviewcontroller는 앱의 가장 먼저 나오는 화면을 설정해준다고 한다.
+        // 스토리보드의 is initial view controller가 위와 비슷한 기능을 해주지만 이것을 통해 사용자가 직접 나오는 화면을 변경할수 있다.
+    {
+        let storyboard = UIStoryboard.init(name : "Main", bundle : nil)
+         let nav = storyboard.instantiateViewController(withIdentifier: "MainViewController")
+        self.window?.rootViewController = nav
+        self.window?.makeKeyAndVisible()
+    }
 
-
+    func storyboardChangeLogout()
+        //storyboard의 rootviewcontroller를 직접 변경해서 로그인할때 찾아갈 화면을 스토리보드 아이디를 설정해서 직접 조정한다(로그아웃)
+    {
+        let storyboard = UIStoryboard.init(name : "Main", bundle : nil)
+        let nav = storyboard.instantiateViewController(withIdentifier: "LoginController")
+        self.window?.rootViewController = nav
+        self.window?.makeKeyAndVisible()
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        
+        GIDSignIn.sharedInstance()?.clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance()?.delegate = self
+        
+        FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         return true
     }
 
+    @available(iOS 9.0, *)
+    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+        let handled: Bool = FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: options[.sourceApplication] as? String, annotation: options[.annotation])
+        // Add any custom logic here.
+        
+        let google =  GIDSignIn.sharedInstance().handle(url, sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String, annotation: [:])
+        
+        return google || handled
+    }
+    
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
+    }
+    
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
+        // ...
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+        
+        guard let authentication = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                       accessToken: authentication.accessToken)
+        Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+            if authResult != nil {
+                let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
+                let Reference = ref.child("users").child((authResult?.user.uid)!)
+                let values = ["email" : Auth.auth().currentUser?.email, "name" : Auth.auth().currentUser?.displayName, "profileImageUrl" : "https://firebasestorage.googleapis.com/v0/b/ring-677a1.appspot.com/o/profile_images%2F143E6E0A-1589-4BBF-8E2E-74AEBB3F19B4.png?alt=media&token=6a5cbf02-46d6-4d06-90db-8f7e6b33ead9"]
+                 
+                Reference.updateChildValues(values)
+            }
+            
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            self.storyboardChangeLogin()
+        }
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // ...
+    }
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

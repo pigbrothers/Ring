@@ -14,8 +14,12 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
     let cellId = "cellId2"
     var users = [User]()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
         /*
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         */
@@ -111,6 +115,7 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
     func setupNavBarWithUser(user: User) {
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        
         
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false

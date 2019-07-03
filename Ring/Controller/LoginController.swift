@@ -8,18 +8,79 @@
 
 import UIKit
 import Firebase
+import GoogleSignIn
+import FBSDKCoreKit
+import FBSDKLoginKit
 
-class LoginController: UIViewController {
-
+class LoginController: UIViewController, GIDSignInUIDelegate {
+    
+    let buttonText = NSAttributedString(string: "FaceBook Login")
+    @IBOutlet weak var GIDbtn : GIDSignInButton!
+    @IBOutlet weak var FBbtn: FBSDKButton!
+    
+    var window: UIWindow?
     @IBOutlet var PwText: UITextField!
     @IBOutlet var EmailText: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //var preferredStatusBarStyle : UIStatusBarStyle = StatusBarStyle()
+        GIDSignIn.sharedInstance()?.signOut()
+        GIDSignIn.sharedInstance()?.uiDelegate = self
+        
+        FBbtn.setAttributedTitle(buttonText, for: .normal)
         view.backgroundColor = UIColor(displayP3Red: 61/255, green: 91/255, blue: 151/255, alpha: 1)
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    @IBAction func facebookLogin(sender: AnyObject){
+        let LoginManager = FBSDKLoginManager()
+        
+        LoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: self) { (result, error) in
+            
+            if let error = error {
+                print("Failed to login: \(error.localizedDescription)")
+                return
+            }
+            guard let accessToken = FBSDKAccessToken.current() else {
+                print("Failed to get access token")
+                return
+            }
+            let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
+            // Perform login by calling Firebase APIs
+            Auth.auth().signIn(with: credential, completion: { (authResult, error) in
+                if let error = error {
+                    print("Login error: \(error.localizedDescription)")
+                    let alertController = UIAlertController(title: "Login Error", message: error.localizedDescription, preferredStyle: .alert)
+                    let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alertController.addAction(okayAction)
+                    self.present(alertController, animated: true, completion: nil)
+                    return
+                }
+                if authResult != nil {
+                    let ref =  Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
+                    let Reference = ref.child("users").child((authResult?.uid)!)
+                    let values = ["email" : Auth.auth().currentUser?.email, "name" : Auth.auth().currentUser?.displayName, "profileImageUrl" : "https://firebasestorage.googleapis.com/v0/b/ring-677a1.appspot.com/o/profile_images%2F143E6E0A-1589-4BBF-8E2E-74AEBB3F19B4.png?alt=media&token=6a5cbf02-46d6-4d06-90db-8f7e6b33ead9"]
+                    
+                    Reference.updateChildValues(values)
+                }
+                let move = self.storyboard?.instantiateViewController(withIdentifier: "MainViewController")
+                move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+                self.present(move!, animated: true, completion: nil)
+            })
+        }
+    }
+    
+    @IBAction func SignIn(_ sender: Any) {
+        GIDSignIn.sharedInstance().signIn()
+        
+        if GIDSignIn.sharedInstance()?.currentUser == nil {
+            let move = self.storyboard?.instantiateViewController(withIdentifier: "TabViewController")
+            move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            self.present(move!, animated: true, completion: nil)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
