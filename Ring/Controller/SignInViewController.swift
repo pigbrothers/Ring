@@ -81,7 +81,7 @@ class SignInViewController: UIViewController {
                                         if let email = self.Email.text {
                                             if let name = self.Name.text {
                                                 let values = ["email" : email, "name" : name, "profileImageUrl" : profileImage] as [String : AnyObject]
-                                                let ref = Database.database().reference(fromURL: "https://ring-677a1.firebaseio.com/")
+                                                let ref = Database.database().reference()
                                                 let reference = ref.child("users").child((authResult?.user.uid)!)
                                                 reference.updateChildValues(values)
                                             }

@@ -10,17 +10,66 @@ import UIKit
 import Firebase
 
 class ChatController: UITableViewController, UIGestureRecognizerDelegate {
-
+    let cellId = "cellId"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: self, action: #selector(handleNewChat))
         checkIfUserIsLoggedIn()
         
-        observeMessages()
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        
+        //observeMessages()
     }
     
     var messages = [Message]()
+    var messagesDictionary = [String: Message]()
+    
+    func observeUserMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let ref = Database.database().reference().child("user-messages").child(uid)
+        ref.observe(.childAdded) { (snapshot) in
+            let messageId = snapshot.key
+            let messagesReference = Database.database().reference().child("messages").child(messageId)
+            
+            messagesReference.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    let message = Message()
+                    
+                    message.fromId = dictionary["fromId"] as? String
+                    message.toId = dictionary["toId"] as? String
+                    message.text = dictionary["text"] as? String
+                    message.timeStamp = dictionary["timeStamp"] as? NSNumber
+                    
+                    if let chatPartnerId = message.chatPartnerId() {
+                        self.messagesDictionary[chatPartnerId] = message
+                        self.messages = Array(self.messagesDictionary.values)
+                        self.messages.sort(by: { (message1, message2) -> Bool in
+                            return message1.timeStamp!.intValue > message2.timeStamp!.intValue
+                        })
+                    }
+                    
+                    self.timer?.invalidate()
+                    print("we just cancled our timer")
+                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReladTable), userInfo: nil, repeats: false)
+                    print("schedule a table reload in 0.1 sec")
+                }
+            })
+        }
+    }
+    
+    var timer: Timer?
+    
+    @objc func handleReladTable() {
+        DispatchQueue.main.async {
+            print("we reloaded the table")
+            self.tableView.reloadData()
+        }
+    }
     
     func observeMessages() {
         let ref = Database.database().reference().child("messages")
@@ -33,13 +82,18 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
                 message.text = dictionary["text"] as? String
                 message.timeStamp = dictionary["timeStamp"] as? NSNumber
                 
-                print(message.text)
-                self.messages.append(message)
-                
-                //thread 문제 해결을 위한 코드
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                if let toId = message.toId {
+                    self.messagesDictionary[toId] = message
+                    self.messages = Array(self.messagesDictionary.values)
+                    self.messages.sort(by: { (message1, message2) -> Bool in
+                        return message1.timeStamp!.intValue > message2.timeStamp!.intValue
+                    })
                 }
+                //print(message.text)
+                //self.messages.append(message)
+                //thread 문제 해결을 위한 코드
+                self.timer?.invalidate()
+                self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReladTable), userInfo: nil, repeats: false)
             }
         }, withCancel: nil)
     }
@@ -50,13 +104,42 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
-        let message = messages[indexPath.row]
+        //let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
         
-        cell.textLabel?.text = message.toId
-        cell.detailTextLabel?.text = message.text
+        let message = messages[indexPath.row]
+        cell.message = message
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let message = messages[indexPath.row]
+        
+        guard let chatPartnerId = message.chatPartnerId() else {
+            return
+        }
+        
+        let ref = Database.database().reference().child("users").child(chatPartnerId)
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            //print(snapshot)
+            guard let dictionary = snapshot.value as? [String: Any] else {
+                return
+            }
+            
+            let user = User()
+            
+            user.id = chatPartnerId
+            user.email = dictionary["email"] as? String
+            user.name = dictionary["name"] as? String
+            user.profileImageUrl = dictionary["profileImageUrl"] as? String
+            
+            self.showChatControllerForUser(user)
+        }
     }
     
     @objc func handleNewChat() {
@@ -77,6 +160,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
                     
                     let user = User()
                     
+                    user.id = dictionary["id"] as? String
                     user.email = dictionary["email"] as? String
                     user.name = dictionary["name"] as? String
                     user.profileImageUrl = dictionary["profileImageUrl"] as? String
@@ -88,6 +172,12 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     }
     
     func setupNavBarWithUser(user: User) {
+        messages.removeAll()
+        messagesDictionary.removeAll()
+        tableView.reloadData()
+        
+        observeUserMessages()
+        
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
         
