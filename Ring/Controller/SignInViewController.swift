@@ -92,7 +92,7 @@ class SignInViewController: UIViewController {
                         }
                         
                         //Move to Login View
-                        let move = self.storyboard?.instantiateViewController(withIdentifier: "ViewController")
+                        let move = self.storyboard?.instantiateViewController(withIdentifier: "LoginController")
                         move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                         
                         self.present(move!, animated: true, completion: nil)
