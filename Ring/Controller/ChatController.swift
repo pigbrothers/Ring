@@ -33,40 +33,50 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         
         let ref = Database.database().reference().child("user-messages").child(uid)
         ref.observe(.childAdded) { (snapshot) in
-            let messageId = snapshot.key
-            let messagesReference = Database.database().reference().child("messages").child(messageId)
-            
-            messagesReference.observeSingleEvent(of: .value, with: { (snapshot) in
-                if let dictionary = snapshot.value as? [String: AnyObject] {
-                    let message = Message()
-                    
-                    message.fromId = dictionary["fromId"] as? String
-                    message.toId = dictionary["toId"] as? String
-                    message.text = dictionary["text"] as? String
-                    message.timeStamp = dictionary["timeStamp"] as? NSNumber
-                    
-                    if let chatPartnerId = message.chatPartnerId() {
-                        self.messagesDictionary[chatPartnerId] = message
-                        self.messages = Array(self.messagesDictionary.values)
-                        self.messages.sort(by: { (message1, message2) -> Bool in
-                            return message1.timeStamp!.intValue > message2.timeStamp!.intValue
-                        })
-                    }
-                    
-                    self.timer?.invalidate()
-                    print("we just cancled our timer")
-                    self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReladTable), userInfo: nil, repeats: false)
-                    print("schedule a table reload in 0.1 sec")
-                }
+            let userId = snapshot.key
+            Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: { (snapshot) in
+                
+                let messageId = snapshot.key
+                self.fetchMessageWithMessageId(messageId: messageId)
             })
         }
+    }
+    
+    private func fetchMessageWithMessageId(messageId: String) {
+        let messagesReference = Database.database().reference().child("messages").child(messageId)
+        
+        messagesReference.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let message = Message()
+                
+                message.fromId = dictionary["fromId"] as? String
+                message.toId = dictionary["toId"] as? String
+                message.text = dictionary["text"] as? String
+                message.timeStamp = dictionary["timeStamp"] as? NSNumber
+                
+                if let chatPartnerId = message.chatPartnerId() {
+                    self.messagesDictionary[chatPartnerId] = message
+                }
+                
+                self.attemptReloadOfTable()
+            }
+        })
+    }
+    
+    private func attemptReloadOfTable() {
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReladTable), userInfo: nil, repeats: false)
     }
     
     var timer: Timer?
     
     @objc func handleReladTable() {
+        self.messages = Array(self.messagesDictionary.values)
+        self.messages.sort(by: { (message1, message2) -> Bool in
+            return message1.timeStamp!.intValue > message2.timeStamp!.intValue
+        })
+        
         DispatchQueue.main.async {
-            print("we reloaded the table")
             self.tableView.reloadData()
         }
     }
@@ -89,8 +99,6 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
                         return message1.timeStamp!.intValue > message2.timeStamp!.intValue
                     })
                 }
-                //print(message.text)
-                //self.messages.append(message)
                 //thread 문제 해결을 위한 코드
                 self.timer?.invalidate()
                 self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReladTable), userInfo: nil, repeats: false)
