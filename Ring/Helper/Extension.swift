@@ -12,13 +12,15 @@ let imageCache = NSCache<AnyObject, AnyObject>()
 
 extension UIImageView {
     func loadImageUsingCacheWithUrlString(urlString: String) {
+        
+        self.image = nil
+        
         if let cachedImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
             self.image = cachedImage
             return
         }
         
         let url = URL(string: urlString)
-        print(url)
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if error != nil {
                 print(error)

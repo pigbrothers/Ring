@@ -47,12 +47,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         
         messagesReference.observeSingleEvent(of: .value, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
-                let message = Message()
-                
-                message.fromId = dictionary["fromId"] as? String
-                message.toId = dictionary["toId"] as? String
-                message.text = dictionary["text"] as? String
-                message.timeStamp = dictionary["timeStamp"] as? NSNumber
+                let message = Message(dictionary: dictionary)
                 
                 if let chatPartnerId = message.chatPartnerId() {
                     self.messagesDictionary[chatPartnerId] = message
@@ -85,12 +80,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         let ref = Database.database().reference().child("messages")
         ref.observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
-                let message = Message()
-                
-                message.fromId = dictionary["fromId"] as? String
-                message.toId = dictionary["toId"] as? String
-                message.text = dictionary["text"] as? String
-                message.timeStamp = dictionary["timeStamp"] as? NSNumber
+                let message = Message(dictionary: dictionary)
                 
                 if let toId = message.toId {
                     self.messagesDictionary[toId] = message
