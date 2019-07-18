@@ -10,11 +10,11 @@ import UIKit
 import Firebase
 
 class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
-
+    var messages = [Message]()
     let cellId = "cellId2"
     var users = [User]()
-    
-    
+    var chatcontroler : ChatController?
+    var users2 = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,10 +26,12 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(NewFriends))
         
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
+        userData()
         fetchUser()
         checkIfUserIsLoggedIn()
         // Do any additional setup after loading the view.
     }
+    
     
     @objc func NewFriends() {
         let newChatController = AlertFriendsView()
@@ -52,6 +54,30 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
         NSLog("===== ViewController_item btnClick_favoriteAddDialog_add =====");
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let user = users2[indexPath.row]
+        let alert = UIAlertController(title: user.email, message: "이 사용자와 채팅을 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+        let okA = UIAlertAction(title: "네", style: .default) { (action) in
+            DispatchQueue.main.async {
+                self.tabBarController?.selectedIndex = 1
+                self.chatcontroler?.showChatControllerForUser(user)
+            }
+        }
+        let defaultA = UIAlertAction(title: "아니요", style: .cancel, handler : nil)
+        alert.addAction(okA)
+        alert.addAction(defaultA)
+        present(alert, animated: false, completion: nil)
+        
+       
+    }
+    
+    
+    func upInfoBar(_ user : User) {
+        let infoView = UIView()
+        infoView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+    }
+    
     func fetchUser() {
         Database.database().reference().child("users").child((Auth.auth().currentUser?.uid)!).child("friends").observe(.childAdded, with: { (snapshot) in
             
@@ -66,6 +92,22 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
                 }
                 
                 self.tableView.reloadData()
+            }
+        }, withCancel: nil)
+    }
+    
+    func userData(){
+        Database.database().reference().child("users").child((Auth.auth().currentUser?.uid)!).child("friends").observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let user2 = User()
+                
+                user2.name = dictionary["name"] as? String
+                user2.email = dictionary["email"] as? String
+                user2.profileImageUrl = dictionary["profileImageUrl"] as? String
+                if user2.email != Auth.auth().currentUser?.email{
+                    self.users2.append(user2)
+                }
             }
         }, withCancel: nil)
     }
@@ -104,15 +146,20 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
         if let profileImageUrl = user.profileImageUrl {
             cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
         }
-        
+    
         return cell
     }
+    
+  
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 56
     }
     
+   
+    
     func setupNavBarWithUser(user: User) {
+        
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
         

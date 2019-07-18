@@ -13,7 +13,8 @@ class AlertFriendsView: UITableViewController {
     
     let cellId = "cellId"
     var users = [User]()
-
+    //var resultSearchController = Ui
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,7 +102,7 @@ class AlertFriendsView: UITableViewController {
     @objc func addFriends(_ sender: UIButton) {
 
         let userAll = users[sender.tag]
-        let values = ["email" : userAll.email, "name" : userAll.name, "profileImageUrl" : userAll.profileImageUrl] as [String : AnyObject]
+        let values = ["email" : userAll.email, "name" : userAll.name, "profileImageUrl" : userAll.profileImageUrl, "key" : userAll.id] as [String : AnyObject]
         let id:String.Index = (userAll.email?.firstIndex(of: "@"))!
         let userid:String = String(userAll.email![...id])
         print(userid)

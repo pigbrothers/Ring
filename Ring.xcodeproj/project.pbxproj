@@ -13,6 +13,9 @@
 		5A7F714F225E409D00535740 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7F714E225E409D00535740 /* Extension.swift */; };
 		BC0702782287C5B100CC23D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FD2216A162001978F9 /* AppDelegate.swift */; };
 		BC0ACBD3227C62E000788231 /* AlertFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */; };
+		BC0F27BE22E095360032A072 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0F27BD22E095360032A072 /* Message.swift */; };
+		BC0F27C022E09B040032A072 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0F27BF22E09B040032A072 /* ChatMessageCell.swift */; };
+		BC0F27C222E09B3C0032A072 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0F27C122E09B3C0032A072 /* UserCell.swift */; };
 		BC118D3A22E008940090B7D2 /* NanumSquareOTFBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BC118D3922E008910090B7D2 /* NanumSquareOTFBold.otf */; };
 		D43A3DF9221FCB260042FD1D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DF8221FCB260042FD1D /* LoginController.swift */; };
 		D43A3DFB221FCB4E0042FD1D /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DFA221FCB4E0042FD1D /* FriendsViewController.swift */; };
@@ -35,6 +38,9 @@
 		722E5312AE3C17110EF3250D /* Pods-Ring.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ring.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ring/Pods-Ring.debug.xcconfig"; sourceTree = "<group>"; };
 		91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ring.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertFriendsView.swift; sourceTree = "<group>"; };
+		BC0F27BD22E095360032A072 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		BC0F27BF22E09B040032A072 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
+		BC0F27C122E09B3C0032A072 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		BC118D3922E008910090B7D2 /* NanumSquareOTFBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareOTFBold.otf; sourceTree = "<group>"; };
 		D43A3DF8221FCB260042FD1D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		D43A3DFA221FCB4E0042FD1D /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */,
+				BC0F27BF22E09B040032A072 /* ChatMessageCell.swift */,
+				BC0F27C122E09B3C0032A072 /* UserCell.swift */,
 			);
 			path = PlusFriend;
 			sourceTree = "<group>";
@@ -143,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				D4E8952C221FE07800F925CF /* User.swift */,
+				BC0F27BD22E095360032A072 /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -318,10 +327,13 @@
 				D43A3DF9221FCB260042FD1D /* LoginController.swift in Sources */,
 				5A77088D22411EC700F64BB9 /* SignInViewController+handler.swift in Sources */,
 				D4E1F89A221FD523002E3B86 /* NewChatController.swift in Sources */,
+				BC0F27C022E09B040032A072 /* ChatMessageCell.swift in Sources */,
 				5A3DDB882279F2220065159A /* ChatLogController.swift in Sources */,
 				5A7F714F225E409D00535740 /* Extension.swift in Sources */,
+				BC0F27C222E09B3C0032A072 /* UserCell.swift in Sources */,
 				D4E8952D221FE07800F925CF /* User.swift in Sources */,
 				D43A3DFD221FCB730042FD1D /* SignInViewController.swift in Sources */,
+				BC0F27BE22E095360032A072 /* Message.swift in Sources */,
 				D483B8062216A162001978F9 /* Ring.xcdatamodeld in Sources */,
 				D4E1F898221FD255002E3B86 /* ChatController.swift in Sources */,
 				BC0ACBD3227C62E000788231 /* AlertFriendsView.swift in Sources */,
@@ -469,6 +481,7 @@
 			baseConfigurationReference = 722E5312AE3C17110EF3250D /* Pods-Ring.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Ring/Info.plist;
@@ -478,6 +491,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.induk.Ring;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -488,6 +502,7 @@
 			baseConfigurationReference = 4DE6E89F291199A029B1423F /* Pods-Ring.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Ring/Info.plist;
@@ -497,6 +512,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.induk.Ring;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
