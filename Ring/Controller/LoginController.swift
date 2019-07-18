@@ -17,6 +17,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
     let buttonText = NSAttributedString(string: "FaceBook Login")
     @IBOutlet weak var GIDbtn : GIDSignInButton!
     @IBOutlet weak var FBbtn: FBSDKButton!
+    @IBOutlet var MainLogo: UILabel!
     
     var window: UIWindow?
     @IBOutlet var PwText: UITextField!
@@ -24,12 +25,18 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MainLogo.alpha = 0
+        
+        UIView.animate(withDuration: 2.0) {
+            self.MainLogo.alpha = 1
+        }
+       
         //var preferredStatusBarStyle : UIStatusBarStyle = StatusBarStyle()
         GIDSignIn.sharedInstance()?.signOut()
         GIDSignIn.sharedInstance()?.uiDelegate = self
         
         FBbtn.setAttributedTitle(buttonText, for: .normal)
-        view.backgroundColor = UIColor(displayP3Red: 61/255, green: 91/255, blue: 151/255, alpha: 1)
+        view.backgroundColor = UIColor(displayP3Red: 221/255, green: 245/255, blue: 249/255, alpha: 1)
         // Do any additional setup after loading the view, typically from a nib.
     }
 
