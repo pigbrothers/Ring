@@ -13,6 +13,7 @@
 		5A7F714F225E409D00535740 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7F714E225E409D00535740 /* Extension.swift */; };
 		BC0702782287C5B100CC23D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D483B7FD2216A162001978F9 /* AppDelegate.swift */; };
 		BC0ACBD3227C62E000788231 /* AlertFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */; };
+		BC118D3A22E008940090B7D2 /* NanumSquareOTFBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BC118D3922E008910090B7D2 /* NanumSquareOTFBold.otf */; };
 		D43A3DF9221FCB260042FD1D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DF8221FCB260042FD1D /* LoginController.swift */; };
 		D43A3DFB221FCB4E0042FD1D /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DFA221FCB4E0042FD1D /* FriendsViewController.swift */; };
 		D43A3DFD221FCB730042FD1D /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43A3DFC221FCB730042FD1D /* SignInViewController.swift */; };
@@ -34,6 +35,7 @@
 		722E5312AE3C17110EF3250D /* Pods-Ring.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ring.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ring/Pods-Ring.debug.xcconfig"; sourceTree = "<group>"; };
 		91BE7F00214FA8C27B8F340D /* Pods_Ring.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ring.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC0ACBD2227C62E000788231 /* AlertFriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertFriendsView.swift; sourceTree = "<group>"; };
+		BC118D3922E008910090B7D2 /* NanumSquareOTFBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumSquareOTFBold.otf; sourceTree = "<group>"; };
 		D43A3DF8221FCB260042FD1D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		D43A3DFA221FCB4E0042FD1D /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		D43A3DFC221FCB730042FD1D /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				D4E1F89B221FD53F002E3B86 /* Controller */,
 				D483B7FD2216A162001978F9 /* AppDelegate.swift */,
 				D483B8012216A162001978F9 /* Main.storyboard */,
+				BC118D3922E008910090B7D2 /* NanumSquareOTFBold.otf */,
 				D483B8072216A163001978F9 /* Assets.xcassets */,
 				D483B8092216A163001978F9 /* LaunchScreen.storyboard */,
 				D483B80C2216A163001978F9 /* Info.plist */,
@@ -214,6 +217,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC118D3A22E008940090B7D2 /* NanumSquareOTFBold.otf in Resources */,
 				D483B80B2216A163001978F9 /* LaunchScreen.storyboard in Resources */,
 				D4F4C44E221BCC260060BD13 /* GoogleService-Info.plist in Resources */,
 				D483B8082216A163001978F9 /* Assets.xcassets in Resources */,
