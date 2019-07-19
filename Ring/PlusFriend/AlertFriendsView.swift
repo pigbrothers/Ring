@@ -41,6 +41,7 @@ class AlertFriendsView: UITableViewController {
            if let  dictionary = snapshot.value as? [String: AnyObject]{
        
                 let user = User()
+                user.id = snapshot.key
                 user.name = dictionary["name"] as? String
                 user.email = dictionary["email"] as? String
                 user.profileImageUrl = dictionary["profileImageUrl"] as? String
@@ -102,12 +103,12 @@ class AlertFriendsView: UITableViewController {
     @objc func addFriends(_ sender: UIButton) {
 
         let userAll = users[sender.tag]
-        let values = ["email" : userAll.email, "name" : userAll.name, "profileImageUrl" : userAll.profileImageUrl, "key" : userAll.id] as [String : AnyObject]
-        let id:String.Index = (userAll.email?.firstIndex(of: "@"))!
-        let userid:String = String(userAll.email![...id])
+        let values = ["email" : userAll.email, "name" : userAll.name, "id" : userAll.id, "profileImageUrl" : userAll.profileImageUrl ] as [String : AnyObject]
+        let before:String.Index = (userAll.email?.firstIndex(of: "@"))!
+        let userid:String = String(userAll.email![...before])
         print(userid)
         let Db = Database.database().reference()
-        Db.child("users").child((Auth.auth().currentUser?.uid)!).child("friends").child(userid).setValue(values)
+        Db.child("users").child((Auth.auth().currentUser?.uid)!).child("friends").child(userAll.id!).setValue(values)
     }
 }
 
