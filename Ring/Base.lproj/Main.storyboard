@@ -262,7 +262,7 @@
         <scene sceneID="KUt-qz-v5d">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tvw-eT-Oa8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="friends" image="friends_" selectedImage="friends_" id="Phm-Ch-yPz">
+                    <tabBarItem key="tabBarItem" title="friends" image="icons8-conference_foreground_selected_filled" selectedImage="friends_" id="Phm-Ch-yPz">
                         <color key="badgeColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -312,7 +312,7 @@
         <scene sceneID="gMs-vc-3bN">
             <objects>
                 <navigationController storyboardIdentifier="Dora" automaticallyAdjustsScrollViewInsets="NO" id="0up-l2-BUg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chat" image="talk_" selectedImage="talk_" id="Kd3-0Y-daQ"/>
+                    <tabBarItem key="tabBarItem" title="Chat" image="icons8-chat_message" selectedImage="talk_" id="Kd3-0Y-daQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Dl7-d5-47g">
                         <rect key="frame" x="0.0" y="20" width="320" height="44"/>
@@ -330,6 +330,8 @@
     </scenes>
     <resources>
         <image name="friends_" width="50" height="50"/>
+        <image name="icons8-chat_message" width="32" height="32"/>
+        <image name="icons8-conference_foreground_selected_filled" width="32" height="32"/>
         <image name="icons8-wedding_rings_filled" width="75" height="75"/>
         <image name="talk_" width="50" height="50"/>
     </resources>
