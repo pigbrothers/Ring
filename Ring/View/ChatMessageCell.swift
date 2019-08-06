@@ -7,10 +7,41 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ChatMessageCell: UICollectionViewCell {
     
+    var message: Message?
+    
     var chatLogController: ChatLogController?
+    
+    let playButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        let image = UIImage(named: "play")
+        
+        button.tintColor = UIColor.white
+        button.setImage(image, for: .normal)
+        
+        button.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    @objc func handlePlay() {
+        print("Play")
+        /*
+        if let videoUrlString = message?.videoUrl, let url = NSURL(string: videoUrlString) {
+            let player = AVPlayer(url: url as URL)
+            
+            let playerLayer = AVPlayerLayer(player: player)
+            playerLayer.frame = bubbleView.bounds
+            bubbleView.layer.addSublayer(playerLayer)
+            player.play()
+        }
+         */
+    }
     
     let textView: UITextView = {
         let tv = UITextView()
@@ -79,6 +110,12 @@ class ChatMessageCell: UICollectionViewCell {
         messageImageView.topAnchor.constraint(equalTo: bubbleView.topAnchor).isActive = true
         messageImageView.widthAnchor.constraint(equalTo: bubbleView.widthAnchor).isActive = true
         messageImageView.heightAnchor.constraint(equalTo: bubbleView.heightAnchor).isActive = true
+        
+        bubbleView.addSubview(playButton)
+        playButton.centerXAnchor.constraint(equalTo: bubbleView.centerXAnchor).isActive = true
+        playButton.centerYAnchor.constraint(equalTo: bubbleView.centerYAnchor).isActive = true
+        playButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        playButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
         profileImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true

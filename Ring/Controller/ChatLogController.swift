@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import MobileCoreServices
+import AVFoundation
 
 class ChatLogController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -122,15 +124,81 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }()
     
     @objc func handleUploadTap() {
+        
         let imagePickerController = UIImagePickerController()
         
         imagePickerController.allowsEditing = true
         imagePickerController.delegate = self
+        imagePickerController.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String] //video가 앨범에 나오게하기
         
         present(imagePickerController, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let videoUrl = info[UIImagePickerControllerMediaURL] as? URL {
+            handleVideoSelectedForUrl(videoUrl) // 앨범에서 비디오를 선택했을 때 처리
+        } else {
+            handleImageSelectedForInfo(info) // 앨범에서 사진을 선택했을 때 처리
+        }
+    
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func handleVideoSelectedForUrl(_ url: URL) {
+        let filename = NSUUID().uuidString + ".mov"
+        let ref = Storage.storage().reference().child("message_movies").child(filename)
+        let uploadTask =  ref.putFile(from: url, metadata: nil) { (metadata, error) in
+            if error != nil {
+                print("Failed upload of video : ", error as Any)
+                return
+            }
+            
+            ref.downloadURL(completion: { (url, error) in
+                if let videoUrl = url?.absoluteString {
+                    if let thumbnailImage = self.thumbnailImageForFileUrl(fileUrl: url!) {
+                        print("thumbnail upload process")
+                        self.uploadToFirebaseStorageUsingImage(image: thumbnailImage, completion: { (imageUrl) in
+                            
+                            let properties = ["imageUrl": imageUrl, "imageWidth": thumbnailImage.size.width, "imageHeight": thumbnailImage.size.height, "videoUrl": videoUrl] as [String: Any]
+                            
+                            self.sendMessageWithProperties(properties: properties)
+                        })
+                    }
+                }
+            })
+        }
+        
+        uploadTask.observe(.progress) { (snapshot) in //영상 업로드 진행상황 보여주기
+            if let completedUnitCount = snapshot.progress?.completedUnitCount, let totalUnitCount = snapshot.progress?.totalUnitCount {
+                let uploadPercentage: Float64 = Float64(completedUnitCount) * 100 / Float64(totalUnitCount)
+                self.navigationItem.title = String(format: "%.0f", uploadPercentage) + "%"
+            }
+        }
+        
+        uploadTask.observe(.success) { (snapshot) in
+            self.navigationItem.title = self.user?.name
+        }
+    }
+    
+    private func thumbnailImageForFileUrl(fileUrl: URL) -> UIImage? { //thumbnail 생성 실패 시 nil을 return하기 위해서 옵셔널 사용
+        let asset = AVAsset(url: fileUrl)
+        //let asset = AVURLAsset(url: fileUrl)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        
+        do {
+            let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+            print("Generate Success!!")
+            return UIImage(cgImage: thumbnailCGImage)
+        } catch let err {
+            print("ERROR : ", err)
+        }
+        
+        print("Fail :<")
+        return nil
+    }
+    
+    private func handleImageSelectedForInfo(_ info: [String: Any]) {
         var selectedImageFromPicker: UIImage?
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
@@ -140,31 +208,31 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         }
         
         if let selectedImage = selectedImageFromPicker {
-            uploadToFirebaseStorageUsingImage(image: selectedImage)
+            uploadToFirebaseStorageUsingImage(image: selectedImage) { (imageUrl) in
+                self.sendMessageWithImageUrl(imageUrl: imageUrl, image: selectedImage)
+            }
         }
-        
-        dismiss(animated: true, completion: nil)
     }
     
-    private func uploadToFirebaseStorageUsingImage(image: UIImage) {
+    private func uploadToFirebaseStorageUsingImage(image: UIImage, completion: @escaping (_ imageUrl: String) -> ()) { // escaping을 사용해 비동기로 작동할 때 가끔 리턴이 오지 않는 경우가 생기는 것 같다.
         let imageName = NSUUID().uuidString
         let ref = Storage.storage().reference().child("message_images").child("\(imageName).jpg")
         
         if let uploadData = UIImageJPEGRepresentation(image, 0.2) {
             ref.putData(uploadData, metadata: nil) { (metadata, error) in
                 if error != nil {
-                    print("Failed to upload image: ", error)
+                    print("Failed to upload image: ", error as Any)
                     return
                 }
                 
                 ref.downloadURL(completion: { (url, error) in
                     if let imageUrl = url?.absoluteString {
-                        self.sendMessageWithImageUrl(imageUrl: imageUrl, image: image)
+                        completion(imageUrl)
+                        //self.sendMessageWithImageUrl(imageUrl: imageUrl, image: image)
                     }
                 })
             }
         }
-        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -230,6 +298,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         cell.chatLogController = self
         
         let message = messages[indexPath.item]
+        
+        cell.message = message
         cell.textView.text = message.text
         
         setupCell(cell: cell, message: message)
@@ -241,7 +311,9 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             cell.bubbleWidthAnchor?.constant = 200
             cell.textView.isHidden = true
         }
-       
+        
+        cell.playButton.isHidden = message.videoUrl == nil // play 버튼 표시 컨트롤
+        
         return cell
     }
     
@@ -354,7 +426,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         startingFrame = startingImageVIew.superview?.convert(startingImageVIew.frame, to: nil)
         
         let zoomingImageView = UIImageView(frame: startingFrame!)
-        zoomingImageView.backgroundColor = UIColor.red
         zoomingImageView.image = startingImageVIew.image
         zoomingImageView.isUserInteractionEnabled = true
         zoomingImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleZoomOut)))

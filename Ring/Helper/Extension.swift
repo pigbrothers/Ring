@@ -27,6 +27,8 @@ extension UIImageView {
             }
             
             DispatchQueue.main.async {
+                // 인터넷 연결이 불안정한 경우, 타임오버가 발생 -> data == nil
+                // 타임오버 이후 예외 처리 필요
                 if let downloadedIamge = UIImage(data: data!) {
                     imageCache.setObject(downloadedIamge, forKey: urlString as AnyObject)
                     self.image = downloadedIamge

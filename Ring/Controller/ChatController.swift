@@ -27,7 +27,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     var messagesDictionary = [String: Message]()
     
     func observeUserMessages() {
-        guard let uid = Auth.auth().currentUser?.uid else {
+        guard let uid = Auth.auth().currentUser?.uid else { //현재 로그인 된 유저
             return
         }
         
@@ -35,7 +35,6 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         ref.observe(.childAdded) { (snapshot) in
             let userId = snapshot.key
             Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: { (snapshot) in
-                
                 let messageId = snapshot.key
                 self.fetchMessageWithMessageId(messageId: messageId)
             })
@@ -52,7 +51,6 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
                 if let chatPartnerId = message.chatPartnerId() {
                     self.messagesDictionary[chatPartnerId] = message
                 }
-                
                 self.attemptReloadOfTable()
             }
         })
@@ -65,7 +63,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     
     var timer: Timer?
     
-    @objc func handleReladTable() {
+    @objc func handleReladTable() { //시간을 기준으로 sorting 후 reload data
         self.messages = Array(self.messagesDictionary.values)
         self.messages.sort(by: { (message1, message2) -> Bool in
             return message1.timeStamp!.intValue > message2.timeStamp!.intValue
@@ -111,7 +109,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { //table view cell 높이 지정
         return 72
     }
     
@@ -136,11 +134,11 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
             user.name = dictionary["name"] as? String
             user.profileImageUrl = dictionary["profileImageUrl"] as? String
             
-            self.showChatControllerForUser(user)
+            self.showChatControllerForUser(user) //cell이 클릭 됐을 때 해당 함수를 불러온다.
         }
     }
     
-    @objc func handleNewChat() {
+    @objc func handleNewChat() { // 새로운 채팅방을 만들 수 있는 화면으로 전환
         let newChatController = NewChatController()
         newChatController.chatController = self
         let navController = UINavigationController(rootViewController: newChatController)
@@ -148,7 +146,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         present(navController, animated: true, completion: nil)
     }
     
-    func checkIfUserIsLoggedIn() {
+    func checkIfUserIsLoggedIn() { //로그인 정보를 확인
         if Auth.auth().currentUser?.uid == nil {
             perform(#selector(handleLogout), with: nil, afterDelay: 0)
         } else {
@@ -169,7 +167,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func setupNavBarWithUser(user: User) {
+    func setupNavBarWithUser(user: User) { //로그인 후 상단의 네비게이션 바 설정
         messages.removeAll()
         messagesDictionary.removeAll()
         tableView.reloadData()
@@ -212,14 +210,9 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         
         self.navigationItem.titleView = titleView
-        /*
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showChatController))
-        self.navigationController?.navigationBar.addGestureRecognizer(tapGesture)
-        self.navigationController?.navigationBar.isUserInteractionEnabled = true
-        */
     }
     
-    @objc func showChatControllerForUser(_ user: User) {
+    @objc func showChatControllerForUser(_ user: User) { //매개변수로 받은 유저와의 채팅방으로 이동
         let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
         chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
@@ -239,58 +232,4 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
-    // MARK: - Table view data source
-    
-    /*
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-    */
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
