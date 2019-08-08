@@ -9,18 +9,39 @@
 import UIKit
 import Firebase
 
-class AlertFriendsView: UITableViewController {
+class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestureRecognizerDelegate  {
     
+    
+    
+    var resultSearchController = UISearchController()
     let cellId = "cellId"
     var users = [User]()
+    var filter = [User]()
     //var resultSearchController = Ui
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.resultSearchController = ({
+            let controller = UISearchController(searchResultsController: nil)
+            controller.searchResultsUpdater = self
+            controller.dimsBackgroundDuringPresentation = false
+            controller.searchBar.sizeToFit()
+            controller.searchBar.barStyle = UIBarStyle.black
+            controller.searchBar.barTintColor = UIColor.white
+            controller.searchBar.backgroundColor = UIColor.clear
+            self.tableView.tableHeaderView = controller.searchBar
+            return controller
+        })()
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancle", style: .plain, target: self, action: #selector(handleCancle))
         tableView.register(UserCell2.self, forCellReuseIdentifier: cellId)
         fetchUser()
+    }
+    
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        
     }
     
     func fetchUser() {
@@ -86,14 +107,33 @@ class AlertFriendsView: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell2
         let user = users[indexPath.row]
-        cell.textLabel?.text = user.name
-        cell.detailTextLabel?.text = user.email
-        if let profileImageUrl = user.profileImageUrl {
-            cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+        if resultSearchController.isActive == true{
+            //오류 나는 부분 title에 값이 !를 쓰면 안됌
+            if user.email?.lowercased().range(of: resultSearchController.title) == nil {
+                filter.append(user)
+            }
+            let user2 = filter[indexPath.row]
+            cell.textLabel?.text = user2.name
+            cell.detailTextLabel?.text = user2.email
+            if let profileImageUrl = user2.profileImageUrl {
+                cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+            }
+            cell.add_button.tag = indexPath.row
+            cell.add_button.addTarget(self, action: #selector(addFriends), for: .touchUpInside)
+            self.tableView.reloadData()
         }
-        cell.add_button.tag = indexPath.row
-        cell.add_button.addTarget(self, action: #selector(addFriends), for: .touchUpInside)
-       return cell
+            /*
+        else {
+            cell.textLabel?.text = user.name
+            cell.detailTextLabel?.text = user.email
+            if let profileImageUrl = user.profileImageUrl {
+                cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+            }
+            cell.add_button.tag = indexPath.row
+            cell.add_button.addTarget(self, action: #selector(addFriends), for: .touchUpInside)
+        }
+         */
+            return cell
         
     }
     
