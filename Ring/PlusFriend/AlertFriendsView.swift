@@ -8,31 +8,42 @@
 
 import UIKit
 import Firebase
+import RxSwift
+import RxCocoa
 
 class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestureRecognizerDelegate  {
     
-    
-    
-    var resultSearchController = UISearchController()
+    let disposeBag = DisposeBag()
+    var resultSearchController : UISearchController = {
+        let controller = UISearchController()
+        controller.dimsBackgroundDuringPresentation = false
+        controller.searchBar.sizeToFit()
+        controller.searchBar.barStyle = UIBarStyle.black
+        controller.searchBar.barTintColor = UIColor.white
+        controller.searchBar.backgroundColor = UIColor.clear
+        return controller
+    }()
     let cellId = "cellId"
     var users = [User]()
     var filter = [User]()
+    var usersEmail = [String]()
+    var filterEmail = [String]()
     //var resultSearchController = Ui
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.resultSearchController = ({
-            let controller = UISearchController(searchResultsController: nil)
-            controller.searchResultsUpdater = self
-            controller.dimsBackgroundDuringPresentation = false
-            controller.searchBar.sizeToFit()
-            controller.searchBar.barStyle = UIBarStyle.black
-            controller.searchBar.barTintColor = UIColor.white
-            controller.searchBar.backgroundColor = UIColor.clear
-            self.tableView.tableHeaderView = controller.searchBar
-            return controller
-        })()
+        /*
+        resultSearchController.searchBar
+               .rx.text // RxCocoa의 Observable 속성
+               .orEmpty // 옵셔널이 아니도록 만듭니다.
+               .subscribe(onNext: { [unowned self] query in // 이 부분 덕분에 모든 새로운 값에 대한 알림을 받을 수 있습니다.
+                self.filterEmail = self.usersEmail.filter { $0.hasPrefix(query) } // 도시를 찾기 위한 “API 요청” 작업을 합니다.
+                    .filter { !$0.isEmpty } // 새로운 값이 정말 새롭다면, 비어있지 않은 쿼리를 위해 필터링합니다.
+                   self.tableView.reloadData() // 테이블 뷰를 다시 불러옵니다.
+               })
+                   .disposed(by: disposeBag)
+        */
+        self.tableView.tableHeaderView = resultSearchController.searchBar
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancle", style: .plain, target: self, action: #selector(handleCancle))
         tableView.register(UserCell2.self, forCellReuseIdentifier: cellId)
@@ -49,7 +60,7 @@ class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestu
         
         let nouser = User()
         var nouserE : [String] = [String]()
-        var booluser : [String] = [String]()
+        var booluser : [String] = [String]()  //user
         
         def.child(Auth.auth().currentUser!.uid).child("friends").observe(.childAdded, with: { (snapshot) in
             let dict = snapshot.value as? [String:AnyObject]
@@ -78,6 +89,7 @@ class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestu
                 
                                 if booluser.contains("true") == false {
                                     self.users.append(user)
+                                    self.usersEmail.append(user.email!)
                                     print(user)
                                     booluser.removeAll()
                                 }
@@ -107,23 +119,6 @@ class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestu
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell2
         let user = users[indexPath.row]
-        if resultSearchController.isActive == true{
-            //오류 나는 부분 title에 값이 !를 쓰면 안됌
-            if user.email?.lowercased().range(of: resultSearchController.title) == nil {
-                filter.append(user)
-            }
-            let user2 = filter[indexPath.row]
-            cell.textLabel?.text = user2.name
-            cell.detailTextLabel?.text = user2.email
-            if let profileImageUrl = user2.profileImageUrl {
-                cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
-            }
-            cell.add_button.tag = indexPath.row
-            cell.add_button.addTarget(self, action: #selector(addFriends), for: .touchUpInside)
-            self.tableView.reloadData()
-        }
-            /*
-        else {
             cell.textLabel?.text = user.name
             cell.detailTextLabel?.text = user.email
             if let profileImageUrl = user.profileImageUrl {
@@ -131,8 +126,7 @@ class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestu
             }
             cell.add_button.tag = indexPath.row
             cell.add_button.addTarget(self, action: #selector(addFriends), for: .touchUpInside)
-        }
-         */
+        
             return cell
         
     }

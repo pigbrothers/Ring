@@ -11,26 +11,53 @@ import Firebase
 import GoogleSignIn
 import FBSDKCoreKit
 import FBSDKLoginKit
+import SnapKit
 
 class LoginController: UIViewController, GIDSignInUIDelegate {
     
     let buttonText = NSAttributedString(string: "FaceBook Login")
     @IBOutlet weak var GIDbtn : GIDSignInButton!
     @IBOutlet weak var FBbtn: FBSDKButton!
-    @IBOutlet var MainLogo: UILabel!
+    var imageWidth : CGFloat = 200.0
+    
+    var subTitle : UILabel = {
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.font = UIFont.boldSystemFont(ofSize: 15)
+        title.text = "우리들의 연결고리"
+        title.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+         title.textAlignment = .center
+        return title
+    }()
+    
+    var mainTitle : UILabel = {
+       let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.font = UIFont.boldSystemFont(ofSize: 30)
+        title.text = "Ring"
+        title.textAlignment = .center
+        title.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        return title
+    }()
+    
+    var mainImage : UIImageView = {
+       let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = #imageLiteral(resourceName: "main_")
+        return image
+    }()
     
     var window: UIWindow?
     @IBOutlet var PwText: UITextField!
     @IBOutlet var EmailText: UITextField!
-    
+    @IBOutlet var LoginBtn : UIButton!
+    @IBOutlet var SignIn : UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        MainLogo.alpha = 0
         
-        UIView.animate(withDuration: 2.0) {
-            self.MainLogo.alpha = 1
-        }
-       
+        imageWidth = view.frame.width/2
+        setup()
         //var preferredStatusBarStyle : UIStatusBarStyle = StatusBarStyle()
         GIDSignIn.sharedInstance()?.signOut()
         GIDSignIn.sharedInstance()?.uiDelegate = self
@@ -106,5 +133,74 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
                 self.present(alert, animated: true, completion: nil)
             }
         }
+    }
+    
+    
+    func setup(){
+        view.addSubview(subTitle)
+        subTitle.snp.makeConstraints { (make) in
+            make.width.equalTo(view.snp.width)
+            make.height.equalTo(20)
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(view.snp.top).offset(50)
+        }
+         view.addSubview(mainImage)
+        mainImage.snp.makeConstraints { (make) in
+            make.width.equalTo(imageWidth)
+            make.height.equalTo(imageWidth)
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(subTitle.snp.bottom).offset(10)
+        }
+         view.addSubview(mainTitle)
+        mainTitle.snp.makeConstraints { (make) in
+            make.width.equalTo(view.snp.width)
+            make.height.equalTo(35)
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(mainImage.snp.bottom)
+        }
+        
+        EmailText.snp.makeConstraints { (make) in
+            make.width.equalTo(300)
+            make.height.equalTo(35)
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(mainTitle.snp.bottom).offset(20)
+        }
+        
+        PwText.snp.makeConstraints { (make) in
+            make.width.equalTo(300)
+            make.height.equalTo(35)
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(EmailText.snp.bottom).offset(10)
+        }
+        
+        LoginBtn.snp.makeConstraints { (make) in
+            make.width.equalTo(300)
+            make.height.equalTo(35)
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(PwText.snp.bottom).offset(30)
+        }
+        
+        SignIn.snp.makeConstraints { (make) in
+                   make.width.equalTo(300)
+                   make.height.equalTo(35)
+                   make.centerX.equalTo(view.snp.centerX)
+                   make.top.equalTo(LoginBtn.snp.bottom).offset(10)
+        }
+        
+        GIDbtn.snp.makeConstraints { (make) in
+            make.width.equalTo(300)
+            make.height.equalTo(35)
+            make.centerX.equalTo(view.snp.centerX)
+            make.top.equalTo(SignIn.snp.bottom).offset(10)
+
+        }
+        
+        FBbtn.snp.makeConstraints { (make) in
+                  make.width.equalTo(300)
+                  make.height.equalTo(35)
+                  make.centerX.equalTo(view.snp.centerX)
+                  make.top.equalTo(GIDbtn.snp.bottom).offset(10)
+
+              }
     }
 }

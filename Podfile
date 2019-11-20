@@ -14,4 +14,7 @@ pod 'FirebaseUI/Google'
 pod 'FBSDKLoginKit'
 pod 'SwiftyJSON'
 pod 'Firebase/Storage'
+pod "RxSwift"
+pod "RxCocoa"
+pod "SnapKit"
 end
