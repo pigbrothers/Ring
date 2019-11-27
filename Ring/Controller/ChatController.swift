@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SnapKit
 
 class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     let cellId = "cellId"
@@ -193,23 +194,29 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         }
         containerView.addSubview(profileImageView)
         
-        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(containerView.snp.left)
+            make.centerY.equalTo(containerView.snp.centerY)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+        }
         
         let nameLabel = UILabel()
         
         containerView.addSubview(nameLabel)
         nameLabel.text = user.name
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor,constant: 8).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
+        nameLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(profileImageView.snp.right).offset(8)
+            make.centerY.equalTo(profileImageView.snp.centerY)
+            make.right.equalTo(containerView.snp.right)
+            make.height.equalTo(profileImageView.snp.height)
+        }
         
-        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
-        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        containerView.snp.makeConstraints { (make) in
+            make.centerX.equalTo(titleView.snp.centerX)
+            make.centerY.equalTo(titleView.snp.centerY)
+        }
         
         self.navigationItem.titleView = titleView
         /*
@@ -239,58 +246,4 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    // MARK: - Table view data source
-    
-    /*
-     override func numberOfSections(in tableView: UITableView) -> Int {
-     // #warning Incomplete implementation, return the number of sections
-     return 0
-     }
-     */
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

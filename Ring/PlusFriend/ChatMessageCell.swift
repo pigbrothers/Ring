@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ChatMessageCell: UICollectionViewCell {
     
@@ -75,15 +76,19 @@ class ChatMessageCell: UICollectionViewCell {
         addSubview(profileImageView)
         
         bubbleView.addSubview(messageImageView)
-        messageImageView.leftAnchor.constraint(equalTo: bubbleView.leftAnchor).isActive = true
-        messageImageView.topAnchor.constraint(equalTo: bubbleView.topAnchor).isActive = true
-        messageImageView.widthAnchor.constraint(equalTo: bubbleView.widthAnchor).isActive = true
-        messageImageView.heightAnchor.constraint(equalTo: bubbleView.heightAnchor).isActive = true
+        messageImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(bubbleView.snp.left)
+            make.top.equalTo(bubbleView.snp.top)
+            make.width.equalTo(bubbleView.snp.width)
+            make.height.equalTo(bubbleView.snp.height)
+        }
         
-        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
-        profileImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        profileImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.snp.left).offset(8)
+            make.bottom.equalTo(self.snp.bottom)
+            make.width.equalTo(32)
+            make.height.equalTo(32)
+        }
         
         bubbleViewRightAnchor = bubbleView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8)
         bubbleViewRightAnchor?.isActive = true
@@ -94,12 +99,12 @@ class ChatMessageCell: UICollectionViewCell {
         bubbleWidthAnchor?.isActive = true
         bubbleView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
         
-        //textView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        textView.leftAnchor.constraint(equalTo: bubbleView.leftAnchor, constant: 8).isActive = true
-        textView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        //textView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        textView.rightAnchor.constraint(equalTo: bubbleView.rightAnchor).isActive = true
-        textView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
+        textView.snp.makeConstraints { (make) in
+            make.left.equalTo(bubbleView.snp.left).offset(8)
+            make.top.equalTo(self.snp.top)
+            make.right.equalTo(bubbleView.snp.right)
+            make.height.equalTo(self.snp.height)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

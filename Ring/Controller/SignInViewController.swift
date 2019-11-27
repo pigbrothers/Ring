@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SnapKit
 
 class SignInViewController: UIViewController {
 
@@ -30,7 +31,7 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(profileImageView)
-        view.backgroundColor = UIColor(displayP3Red: 61/255, green: 91/255, blue: 151/255, alpha: 1)
+        view.backgroundColor = UIColor(displayP3Red: 130/255, green: 49/255, blue: 59/255, alpha: 1)
         setupProfileImageView()
         
         // Do any additional setup after loading the view.
@@ -42,10 +43,16 @@ class SignInViewController: UIViewController {
     }
     
     func setupProfileImageView() {
-        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImageView.bottomAnchor.constraint(equalTo: Name.topAnchor, constant: -12).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+//        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        profileImageView.bottomAnchor.constraint(equalTo: Name.topAnchor, constant: -12).isActive = true
+//        profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+//        profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        profileImageView.snp.makeConstraints { (make) in
+            make.centerX.equalTo(view.snp.centerX)
+            make.bottom.equalTo(Name.snp.top).offset(-12)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
+        }
     }
    
     @IBAction func SignIn(_ sender: UIButton) {
@@ -70,7 +77,7 @@ class SignInViewController: UIViewController {
                         if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                             storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                                 if error != nil {
-                                    print(error)
+                                    print(error as Any)
                                     
                                     return
                                 }
@@ -96,10 +103,9 @@ class SignInViewController: UIViewController {
                         move?.modalTransitionStyle = UIModalTransitionStyle.coverVertical
                         
                         self.present(move!, animated: true, completion: nil)
-                    }
-                    else if error != nil {
+                    } else if error != nil {
                         //회원가입할때 이메일 중복있으면 alert창이 뜬다.
-                        print(error)
+                        print(error as Any)
                         let alert = UIAlertController(title: "회원가입 실패", message: "잘못된 부분을 처리하고 다시 시도하세요", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "확인", style: UIAlertActionStyle.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)      
@@ -108,15 +114,4 @@ class SignInViewController: UIViewController {
             }
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

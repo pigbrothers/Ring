@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="s6R-8z-MIo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="s6R-8z-MIo">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -208,7 +208,7 @@
         <scene sceneID="KUt-qz-v5d">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tvw-eT-Oa8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="friends" image="icons8-conference_foreground_selected_filled" selectedImage="friends_" id="Phm-Ch-yPz">
+                    <tabBarItem key="tabBarItem" title="friends" image="icons8-conference_foreground_selected_filled" id="Phm-Ch-yPz">
                         <color key="badgeColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -258,7 +258,7 @@
         <scene sceneID="gMs-vc-3bN">
             <objects>
                 <navigationController storyboardIdentifier="Dora" automaticallyAdjustsScrollViewInsets="NO" id="0up-l2-BUg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chat" image="icons8-chat_message" selectedImage="talk_" id="Kd3-0Y-daQ"/>
+                    <tabBarItem key="tabBarItem" title="Chat" image="icons8-chat_message" id="Kd3-0Y-daQ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Dl7-d5-47g">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -275,9 +275,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="friends_" width="50" height="50"/>
         <image name="icons8-chat_message" width="32" height="32"/>
         <image name="icons8-conference_foreground_selected_filled" width="32" height="32"/>
-        <image name="talk_" width="50" height="50"/>
     </resources>
 </document>

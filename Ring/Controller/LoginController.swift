@@ -24,9 +24,9 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.font = UIFont.boldSystemFont(ofSize: 15)
-        title.text = "우리들의 연결고리"
-        title.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-         title.textAlignment = .center
+        title.text = " "
+        title.textColor = .black
+        title.textAlignment = .center
         return title
     }()
     
@@ -36,7 +36,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
         title.font = UIFont.boldSystemFont(ofSize: 30)
         title.text = "Ring"
         title.textAlignment = .center
-        title.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        title.textColor = .black
         return title
     }()
     
@@ -63,8 +63,9 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance()?.uiDelegate = self
         
         FBbtn.setAttributedTitle(buttonText, for: .normal)
-        view.backgroundColor = UIColor(displayP3Red: 221/255, green: 245/255, blue: 249/255, alpha: 1)
+        view.backgroundColor = UIColor(displayP3Red: 130/255, green: 49/255, blue: 59/255, alpha: 1)
         // Do any additional setup after loading the view, typically from a nib.
+        // #6d313b -> 109 49 59  #b6989d -> 182 152 157
     }
 
     @IBAction func facebookLogin(sender: AnyObject){
@@ -144,14 +145,16 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
             make.centerX.equalTo(view.snp.centerX)
             make.top.equalTo(view.snp.top).offset(50)
         }
-         view.addSubview(mainImage)
+        
+        view.addSubview(mainImage)
         mainImage.snp.makeConstraints { (make) in
             make.width.equalTo(imageWidth)
             make.height.equalTo(imageWidth)
             make.centerX.equalTo(view.snp.centerX)
             make.top.equalTo(subTitle.snp.bottom).offset(10)
         }
-         view.addSubview(mainTitle)
+        
+        view.addSubview(mainTitle)
         mainTitle.snp.makeConstraints { (make) in
             make.width.equalTo(view.snp.width)
             make.height.equalTo(35)
@@ -177,7 +180,7 @@ class LoginController: UIViewController, GIDSignInUIDelegate {
             make.width.equalTo(300)
             make.height.equalTo(35)
             make.centerX.equalTo(view.snp.centerX)
-            make.top.equalTo(PwText.snp.bottom).offset(30)
+            make.top.equalTo(PwText.snp.bottom).offset(10)
         }
         
         SignIn.snp.makeConstraints { (make) in

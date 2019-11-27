@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import RxSwift
 import RxCocoa
+import SnapKit
 
 class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestureRecognizerDelegate  {
     
@@ -180,15 +181,27 @@ class UserCell2: UITableViewCell {
         addSubview(profileImageView)
         addSubview(add_button)
         
-        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.snp.left).offset(8)
+            make.centerY.equalTo(self.snp.centerY)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+        }
+//        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
+//        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+//        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+//        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        add_button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8).isActive = true
-        add_button.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        add_button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        add_button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//        add_button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8).isActive = true
+//        add_button.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+//        add_button.widthAnchor.constraint(equalToConstant: 40).isActive = true
+//        add_button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        add_button.snp.makeConstraints { (make) in
+            make.right.equalTo(self.snp.right).offset(-8)
+            make.centerY.equalTo(self.snp.centerY)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

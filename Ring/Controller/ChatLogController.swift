@@ -1,5 +1,6 @@
 import UIKit
 import Firebase
+import SnapKit
 
 class ChatLogController: UICollectionViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -59,8 +60,13 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         collectionView?.backgroundColor = UIColor.white
         collectionView?.register(ChatMessageCell.self, forCellWithReuseIdentifier: cellId)
         collectionView?.keyboardDismissMode = .interactive
-        
+        self.tabBarController?.tabBar.isHidden = true
         setupKeyboardObservers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     lazy var inputContainerView: UIView = { //채팅 입력창
@@ -75,40 +81,46 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         uploadImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleUploadTap)))
         containerView.addSubview(uploadImageView)
         
-        uploadImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
-        uploadImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        uploadImageView.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        uploadImageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        uploadImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(containerView.snp.left)
+            make.centerY.equalTo(containerView.snp.centerY)
+            make.width.equalTo(44)
+            make.height.equalTo(44)
+        }
         //44크기는 버튼을 만들때 애플에서 추천하는 크기이다.
-        
         let sendButton = UIButton(type: .system)
         sendButton.setTitle("Send", for: .normal)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
         containerView.addSubview(sendButton)
         
-        sendButton.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
-        sendButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
+        sendButton.snp.makeConstraints { (make) in
+            make.right.equalTo(containerView.snp.right)
+            make.centerY.equalTo(containerView.snp.centerY)
+            make.width.equalTo(80)
+            make.height.equalTo(containerView.snp.height)
+        }
         
         containerView.addSubview(self.inputTextField)
         
-        self.inputTextField.leftAnchor.constraint(equalTo: uploadImageView.rightAnchor, constant: 8).isActive = true
-        self.inputTextField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        //inputTextField.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        self.inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor).isActive = true
-        self.inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
+        self.inputTextField.snp.makeConstraints { (make) in
+            make.left.equalTo(uploadImageView.snp.right).offset(8)
+            make.centerY.equalTo(containerView.snp.centerY)
+            make.right.equalTo(sendButton.snp.left)
+            make.height.equalTo(containerView.snp.height)
+        }
         
         let separatorLineView = UIView()
         separatorLineView.backgroundColor = UIColor.lightGray
         separatorLineView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(separatorLineView)
         
-        separatorLineView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
-        separatorLineView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        separatorLineView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
-        separatorLineView.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        separatorLineView.snp.makeConstraints { (make) in
+            make.left.equalTo(containerView.snp.left)
+            make.top.equalTo(containerView.snp.top)
+            make.width.equalTo(containerView.snp.width)
+            make.height.equalTo(1)
+        }
         
         return containerView
     }()
@@ -145,7 +157,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         if let uploadData = UIImageJPEGRepresentation(image, 0.2) {
             ref.putData(uploadData, metadata: nil) { (metadata, error) in
                 if error != nil {
-                    print("Failed to upload image: ", error)
+                    print("Failed to upload image: ", error as Any)
                     return
                 }
                 
@@ -184,11 +196,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        NotificationCenter.default.removeObserver(self)
-    }
+
     
     @objc func handleKeyboardWillShow(notification: NSNotification) {
         let userInfo: NSDictionary = notification.userInfo! as NSDictionary
@@ -316,7 +324,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
         childRef.updateChildValues(values) { (error, ref) in
             if error != nil {
-                print("error : \(error)")
+                print("error : \(String(describing: error))")
                 return
             }
             

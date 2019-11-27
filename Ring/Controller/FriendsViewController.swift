@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SnapKit
 
 class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
     var messages = [Message]()
@@ -48,8 +49,7 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
          */
     }
     
-    @objc func btnClick_favoriteAddDialog_add () -> Void
-    {
+    @objc func btnClick_favoriteAddDialog_add () -> Void {
         NSLog("===== ViewController_item btnClick_favoriteAddDialog_add =====");
     }
     
@@ -149,7 +149,6 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
         
-        
         let containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         titleView.addSubview(containerView)
@@ -164,24 +163,39 @@ class FriendsViewController: UITableViewController, UIGestureRecognizerDelegate{
         }
         containerView.addSubview(profileImageView)
         
-        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(containerView.snp.left)
+            make.centerY.equalTo(containerView.snp.centerY)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+        }
+//        profileImageView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
+//        profileImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
+//        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+//        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         let nameLabel = UILabel()
         
         containerView.addSubview(nameLabel)
         nameLabel.text = user.name
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor,constant: 8).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
-
-        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
-        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
+        nameLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(profileImageView.snp.right).offset(8)
+            make.centerY.equalTo(profileImageView.snp.centerY)
+            make.right.equalTo(containerView.snp.right)
+            make.height.equalTo(profileImageView.snp.height)
+        }
+//        nameLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor,constant: 8).isActive = true
+//        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
+//        nameLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+//        nameLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
         
+        containerView.snp.makeConstraints { (make) in
+            make.centerX.equalTo(titleView.snp.centerX)
+            make.centerY.equalTo(titleView.snp.centerY)
+        }
+//        containerView.centerXAnchor.constraint(equalTo: titleView.centerXAnchor).isActive = true
+//        containerView.centerYAnchor.constraint(equalTo: titleView.centerYAnchor).isActive = true
         self.navigationItem.titleView = titleView
         
         titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
