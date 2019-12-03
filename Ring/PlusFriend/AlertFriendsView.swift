@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import RxSwift
 import RxCocoa
+import SnapKit
 
 class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestureRecognizerDelegate  {
     
@@ -32,17 +33,7 @@ class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestu
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*
-        resultSearchController.searchBar
-               .rx.text // RxCocoa의 Observable 속성
-               .orEmpty // 옵셔널이 아니도록 만듭니다.
-               .subscribe(onNext: { [unowned self] query in // 이 부분 덕분에 모든 새로운 값에 대한 알림을 받을 수 있습니다.
-                self.filterEmail = self.usersEmail.filter { $0.hasPrefix(query) } // 도시를 찾기 위한 “API 요청” 작업을 합니다.
-                    .filter { !$0.isEmpty } // 새로운 값이 정말 새롭다면, 비어있지 않은 쿼리를 위해 필터링합니다.
-                   self.tableView.reloadData() // 테이블 뷰를 다시 불러옵니다.
-               })
-                   .disposed(by: disposeBag)
-        */
+        
         self.tableView.tableHeaderView = resultSearchController.searchBar
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancle", style: .plain, target: self, action: #selector(handleCancle))
@@ -52,7 +43,8 @@ class AlertFriendsView: UITableViewController,  UISearchResultsUpdating, UIGestu
     
     
     func updateSearchResults(for searchController: UISearchController) {
-        
+       
+        self.tableView.reloadData()
     }
     
     func fetchUser() {
@@ -180,15 +172,27 @@ class UserCell2: UITableViewCell {
         addSubview(profileImageView)
         addSubview(add_button)
         
-        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        profileImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.snp.left).offset(8)
+            make.centerY.equalTo(self.snp.centerY)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+        }
+//        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
+//        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+//        profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+//        profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        add_button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8).isActive = true
-        add_button.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        add_button.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        add_button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//        add_button.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8).isActive = true
+//        add_button.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+//        add_button.widthAnchor.constraint(equalToConstant: 40).isActive = true
+//        add_button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        add_button.snp.makeConstraints { (make) in
+            make.right.equalTo(self.snp.right).offset(-8)
+            make.centerY.equalTo(self.snp.centerY)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
