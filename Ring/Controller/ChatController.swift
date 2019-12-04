@@ -11,7 +11,7 @@ import Firebase
 import SnapKit
 
 class ChatController: UITableViewController, UIGestureRecognizerDelegate {
-    let cellId = "cellId"
+    let cellId = "cellId" //tableView cell의 id
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,48 +21,46 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         checkIfUserIsLoggedIn()
         
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
-        
         //observeMessages()
     }
     
-    var messages = [Message]()
-    var messagesDictionary = [String: Message]()
+    var messages = [Message]() //Message 형 빈 배열
+    var messagesDictionary = [String: Message]() //key -> String, value -> Message인 빈 dictionary
     
     func observeUserMessages() {
-        guard let uid = Auth.auth().currentUser?.uid else {
+        guard let uid = Auth.auth().currentUser?.uid else { //현재 Auth를 통해 인증되어 있는 사용자의 uid를 가져온다.
             return
         }
         
-        let ref = Database.database().reference().child("user-messages").child(uid)
+        let ref = Database.database().reference().child("user-messages").child(uid) //user-messages 아래의 현재 로그인한 사용자의 메시지 내역을 가저오기 위한 ref
         ref.observe(.childAdded) { (snapshot) in
             let userId = snapshot.key
             Database.database().reference().child("user-messages").child(uid).child(userId).observe(.childAdded, with: { (snapshot) in
-                
-                let messageId = snapshot.key
-                self.fetchMessageWithMessageId(messageId: messageId)
+            //user-messages -> uid(현재 메세지를 보낼 사라) -> userId(받는 사람) 의 구조
+                let messageId = snapshot.key //에 포함된 메세지들의 고유 id를 가져옴
+                self.fetchMessageWithMessageId(messageId: messageId) //child의 갯수 만큼 반복해서 호출
             })
         }
     }
     
-      @objc func logout(){
-          let firebaseAuth = Auth.auth()
-          do {
-              try firebaseAuth.signOut()
-              dismiss(animated: true, completion: nil)
-          } catch let signOutError as NSError {
-              print ("Error signing out: \(signOutError)")
-          } catch {
-              print("Unknown error.")
-          }
-        
+    @objc func logout(){
+      let firebaseAuth = Auth.auth()
+      do {
+          try firebaseAuth.signOut()
+          dismiss(animated: true, completion: nil)
+      } catch let signOutError as NSError {
+          print ("Error signing out: \(signOutError)")
+      } catch {
+          print("Unknown error.")
       }
+    }
     
     private func fetchMessageWithMessageId(messageId: String) {
-        let messagesReference = Database.database().reference().child("messages").child(messageId)
+        let messagesReference = Database.database().reference().child("messages").child(messageId) //해당 메세지를 노드에 접근
         
         messagesReference.observeSingleEvent(of: .value, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String: AnyObject] {
-                let message = Message(dictionary: dictionary)
+                let message = Message(dictionary: dictionary) //메세지 내용(fromId, text, timestamp, toId) 등 초기화
                 
                 if let chatPartnerId = message.chatPartnerId() {
                     self.messagesDictionary[chatPartnerId] = message
@@ -73,7 +71,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
         })
     }
     
-    private func attemptReloadOfTable() {
+    private func attemptReloadOfTable() { //타이머 세팅
         self.timer?.invalidate()
         self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReladTable), userInfo: nil, repeats: false)
     }
@@ -83,7 +81,7 @@ class ChatController: UITableViewController, UIGestureRecognizerDelegate {
     @objc func handleReladTable() {
         self.messages = Array(self.messagesDictionary.values)
         self.messages.sort(by: { (message1, message2) -> Bool in
-            return message1.timeStamp!.intValue > message2.timeStamp!.intValue
+            return message1.timeStamp!.intValue > message2.timeStamp!.intValue //시간에 따라 sorting
         })
         
         DispatchQueue.main.async {

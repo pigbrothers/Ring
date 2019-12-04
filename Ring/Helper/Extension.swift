@@ -18,10 +18,10 @@ extension UIImageView {
         }
         
         let url = URL(string: urlString)
-        print(url)
+        print(url as Any)
         URLSession.shared.dataTask(with: url!) { (data, response, error) in
             if error != nil {
-                print(error)
+                print(error as Any)
             }
             
             DispatchQueue.main.async {

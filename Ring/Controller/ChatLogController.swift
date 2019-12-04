@@ -144,14 +144,14 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         }
         
         if let selectedImage = selectedImageFromPicker {
-            uploadToFirebaseStorageUsingImage(image: selectedImage)
+            uploadToFirebaseStorageUsingImage(image: selectedImage) //선택한 이미지를 DB에 저장하는 함수 호출
         }
         
         dismiss(animated: true, completion: nil)
     }
     
-    private func uploadToFirebaseStorageUsingImage(image: UIImage) {
-        let imageName = NSUUID().uuidString
+    private func uploadToFirebaseStorageUsingImage(image: UIImage) { //Firebase DB에 이미지 url 저장
+        let imageName = NSUUID().uuidString //uid 생성
         let ref = Storage.storage().reference().child("message_images").child("\(imageName).jpg")
         
         if let uploadData = UIImageJPEGRepresentation(image, 0.2) {
@@ -186,18 +186,16 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     }
     
     func setupKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardDidShow), name: NSNotification.Name.UIKeyboardDidShow, object: nil) //키보드를 나타나게 하기 위한 Notification 사용
     }
     
-    @objc func handleKeyboardDidShow() {
+    @objc func handleKeyboardDidShow() { //키보드가 나타났을 때
         if messages.count > 0 {
             let indexPath = NSIndexPath(item: messages.count - 1, section: 0)
-            collectionView?.scrollToItem(at: indexPath as IndexPath, at: .top, animated: true)
+            collectionView?.scrollToItem(at: indexPath as IndexPath, at: .top, animated: true) //가장 아래로 보냄
         }
     }
-    
 
-    
     @objc func handleKeyboardWillShow(notification: NSNotification) {
         let userInfo: NSDictionary = notification.userInfo! as NSDictionary
         let keyboardFrame: NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
@@ -205,17 +203,17 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         let keyboardHeight = keyboardRectangle.height
         let keyboardDuration: Double = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
         
-        containerViewBottomAnchor?.constant = -keyboardHeight
+        containerViewBottomAnchor?.constant = -keyboardHeight //입력창을 키보드 높이만큼 위로 올린다.
         UIView.animate(withDuration: keyboardDuration) {
             self.view.layoutIfNeeded()
         }
     }
     
-    @objc func handleKeyboardWillHide(notification: NSNotification) {
+    @objc func handleKeyboardWillHide(notification: NSNotification) { //카비도 없어질때
         let userInfo: NSDictionary = notification.userInfo! as NSDictionary
         let keyboardDuration: Double = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
         
-        containerViewBottomAnchor?.constant = 0
+        containerViewBottomAnchor?.constant = 0 //다시 원래대로
         UIView.animate(withDuration: keyboardDuration) {
             self.view.layoutIfNeeded()
         }
@@ -234,12 +232,12 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
         setupCell(cell: cell, message: message)
         
-        if let text = message.text {
+        if let text = message.text { //텍스트인지 이미지인지 구분하기 위한 코드
             cell.bubbleWidthAnchor?.constant = estimateFrameForText(text: text).width + 32
             cell.textView.isHidden = false
         } else if message.imageUrl != nil {
-            cell.bubbleWidthAnchor?.constant = 200
-            cell.textView.isHidden = true
+            cell.bubbleWidthAnchor?.constant = 200 //버블의 가로 넓이를 200으로 고정
+            cell.textView.isHidden = true //텍스트 담당은 안보이도록
         }
         
         return cell
@@ -250,10 +248,10 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
         }
         
-        if message.fromId == Auth.auth().currentUser?.uid {
+        if message.fromId == Auth.auth().currentUser?.uid { // 현재 사용자의 메세지는 오른쪽에 붙게 만듦
             cell.bubbleView.backgroundColor = ChatMessageCell.blueColor
             cell.textView.textColor = UIColor.white
-            cell.profileImageView.isHidden = true
+            cell.profileImageView.isHidden = true //프로필 이미지와 버블의 위치를 현재 사용자 uid와 비교하여 보이고 안보이고를 설정한다.
             
             cell.bubbleViewRightAnchor?.isActive = true
             cell.bubbleViewLeftAnchor?.isActive = false
@@ -266,8 +264,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         }
         
         if let messageImageUrl = message.imageUrl {
-            cell.messageImageView.loadImageUsingCacheWithUrlString(urlString: messageImageUrl)
-            cell.messageImageView.isHidden = false
+            cell.messageImageView.loadImageUsingCacheWithUrlString(urlString: messageImageUrl) //캐시처리를 위한 코드
+            cell.messageImageView.isHidden = false //이미지가 맞으면 ImageView를 나타나게 한다
             cell.bubbleView.backgroundColor = UIColor.clear
         } else {
             cell.messageImageView.isHidden = true
@@ -281,9 +279,9 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height: CGFloat = 80
         
-        let message = messages[indexPath.item]
+        let message = messages[indexPath.item] //현재 메세지 아이템 Message 형
         if let text = message.text {
-            height = estimateFrameForText(text: text).height + 20
+            height = estimateFrameForText(text: text).height + 20 //텍스트 양 만큼 높이를 조절하는 함수 호출
         } else if let imageWidth = message.imageWidth?.floatValue, let imageHeight = message.imageHeight?.floatValue {
             
             height = CGFloat(imageHeight / imageWidth * 200)
@@ -293,7 +291,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         return CGSize(width: width, height: height)
     }
     
-    private func estimateFrameForText(text: String) -> CGRect {
+    private func estimateFrameForText(text: String) -> CGRect { //텍스트를 받아 맞는 높이를 계산하여 리턴해준다
         let size = CGSize(width: 200, height: 100)
         let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
         
@@ -348,7 +346,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
     var blackBackgroundView: UIView?
     var startingImageView: UIImageView?
     
-    func performZoomInForImageView(startingImageVIew: UIImageView) {
+    func performZoomInForImageView(startingImageVIew: UIImageView) { //줌을 시키는 함수
+        
         self.startingImageView = startingImageVIew
         self.startingImageView?.isHidden = true
         startingFrame = startingImageVIew.superview?.convert(startingImageVIew.frame, to: nil)

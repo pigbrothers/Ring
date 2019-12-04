@@ -11,16 +11,16 @@ import Firebase
 
 class Message: NSObject {
     
-    var fromId: String?
-    var text: String?
-    var timeStamp: NSNumber?
-    var toId: String?
+    var fromId: String? //보낸 사람
+    var text: String? //내용
+    var timeStamp: NSNumber? //시간 정보
+    var toId: String? //받는 사람
     var imageUrl: String?
     var imageHeight: NSNumber?
     var imageWidth: NSNumber?
     
     func chatPartnerId() -> String? {
-        return fromId == Auth.auth().currentUser?.uid ? toId : fromId
+        return fromId == Auth.auth().currentUser?.uid ? toId : fromId //현재 로그인한 사용자와 보낸 사람이 일치하다면 받는 사람을 uid를 리턴 아니면 보낸 사람 리턴
     }
     
     init(dictionary: [String: AnyObject]) {

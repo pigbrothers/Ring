@@ -62,11 +62,6 @@ class LoginController: UIViewController //GIDSignInUIDelegate
         //GIDSignIn.sharedInstance()?.signOut()
         //GIDSignIn.sharedInstance()?.uiDelegate = self
         
-<<<<<<< HEAD
-        //FBbtn.setAttributedTitle(buttonText, for: .normal)
-=======
-        FBbtn.setAttributedTitle(buttonText, for: .normal)
->>>>>>> c7e711436b8073fc4beb50201dbf4f100a9ade82
         view.backgroundColor = UIColor(displayP3Red: 130/255, green: 49/255, blue: 59/255, alpha: 1)
         // Do any additional setup after loading the view, typically from a nib.
         // #6d313b -> 109 49 59  #b6989d -> 182 152 157
